@@ -5,7 +5,17 @@ require("dotenv").config();
 const nodemailer = require('nodemailer');
 const app = express();
 app.use(express.json());
-app.use(cors());
+import cors from "cors";
+
+app.use(cors({
+  origin: [
+    "http://localhost:4321",
+    "https://synergy-squad-website-....vercel.app"
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+}));
+
 const CCLDB = require("./models/CCLDB");
 const CCLTeam = require("./models/CCLTEAMS");
 
