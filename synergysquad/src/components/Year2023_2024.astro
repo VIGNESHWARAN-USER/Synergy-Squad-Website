@@ -1,0 +1,162 @@
+---
+// src/components/Year2023_2024.astro
+const { data } = Astro.props;
+---
+<div class="year-container">
+    <!-- 1. Identification & Formation -->
+    <div class="section-block fade-in-up">
+        <h3>Identification & Formation</h3>
+        <div class="summary-card">
+            <p>As part of the <strong>Pre-Placement Readiness Initiative</strong>, the <strong>top 40 candidates</strong> were identified from a total strength of <strong>201 students</strong> to form <strong>Synergy Squad 1.0.</strong> This squad received intensive Java Programming Refresher Training and participated in weekly challenges to strengthen their coding skills.</p>
+        </div>
+    </div>
+    <!-- 2. Intensive Training Plan -->
+    <div class="section-block fade-in-up">
+        <h3>Intensive Refresher Training <span class="date-span">(26/12/2023 – 05/01/2024)</span></h3>
+        <div class="training-plan">
+            <div class="plan-item"><div class="session">Forenoon</div><div class="activity">Practicing Java programs in the NEO PAT</div></div>
+            <div class="plan-item"><div class="session">Afternoon</div><div class="activity">Solving moderate problems in online compilers</div></div>
+            <div class="plan-item"><div class="session">Evening</div><div class="activity">Technical Group Discussion</div></div>
+            <div class="plan-item"><div class="session">Night</div><div class="activity">Solving daily challenges in the Techgig portal</div></div>
+        </div>
+    </div>
+    <!-- 3. Weekly Activity Summary -->
+    <div class="section-block fade-in-up">
+        <h3>Weekly Activity Summary</h3>
+        <div class="table-container">
+            <div class="table-header"><div>Activity Name</div><div>Date Conducted</div></div>
+            {data.weeklyActivities.map(activity => (
+                <div class="table-row"><div>{activity.name}</div><div>{activity.date}</div></div>
+            ))}
+        </div>
+    </div>
+    <!-- 4. Activity Execution Reports -->
+    <div class="section-block dark-section fade-in-up">
+        <h3>Activity Execution Reports</h3>
+        <div class="achievements-grid" id="reports-grid-2023-2024">
+            {data.topperLists.map((achievement, index) => (
+                // Initially hide cards with an index of 3 or greater
+                <div class:list={['achievement-card', { hidden: index >= 3 }]} data-index={index}>
+                    <div class="image-container"><img src={achievement.imageUrl} alt={achievement.title} loading="lazy"/></div>
+                    <div class="content-container">
+                        <h4>{achievement.title}</h4>
+                        <ul class="toppers-list">{achievement.toppers.map(topper => <li>{topper}</li>)}</ul>
+                    </div>
+                </div>
+            ))}
+        </div>
+        <!-- ADDED BUTTON CONTAINER AND BUTTONS -->
+        <div class="cta-container">
+            <button class="cta-button" id="load-more-btn-2023-2024">View More Reports</button>
+            <button class="cta-button hidden" id="view-less-btn-2023-2024">View Less</button>
+        </div>
+    </div>
+</div>
+<style>
+    /* Your exact styles are preserved */
+    .year-container { max-width: 1200px; margin: auto; padding: 0.5rem 1.5rem; }
+    .section-block { margin-bottom: 3rem; }
+    h3 { font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.75rem; }
+    .date-span { font-size: 1rem; color: var(--text-secondary); font-weight: 500; }
+    .summary-card { background-color: #fff; border: 1px solid var(--border-color); padding: 2rem; border-radius: 12px; }
+    .summary-card p { font-size: 1.1rem; line-height: 1.8; margin: 0; }
+    .summary-card strong { color: var(--primary-color); font-weight: 600; }
+    .training-plan { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+    .plan-item { background-color: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; }
+    .session { font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem; }
+    .activity { color: var(--text-secondary); }
+    .table-container { background-color: #fff; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; max-width: 800px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .table-header, .table-row { display: grid; grid-template-columns: 2fr 1fr; padding: 1rem; }
+    .table-header { font-weight: 600; background-color: #c8d7e8; }
+    .table-row { border-top: 1px solid var(--border-color); }
+    .table-row div:last-child { text-align: right; }
+    .dark-section { background-color: #0f172a; color: #e2e8f0; padding: 3rem; border-radius: 16px; margin-top: 3rem; }
+    .dark-section h3 { border-color: #1e293b; color: #fff; }
+    .achievements-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    @media (max-width: 1024px) { .achievements-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .achievements-grid { grid-template-columns: 1fr; } }
+    .achievement-card { background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; display: flex; flex-direction: column; transition: all 0.3s ease; }
+    .achievement-card:hover { transform: translateY(-5px); border-color: rgba(96, 165, 250, 0.5); }
+    .image-container { border-top-left-radius: 15px; border-top-right-radius: 15px; overflow: hidden; aspect-ratio: 4 / 5; }
+    .image-container img { width: 100%; height: 100%; object-fit: cover; }
+    .content-container { padding: 1.25rem; }
+    h4 { font-size: 1rem; font-weight: 600; margin: 0 0 1rem; color: #fff; }
+    .toppers-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .toppers-list li { font-size: 0.875rem; color: #cbd5e1; padding-left: 1.5rem; position: relative; }
+    .toppers-list li::before { content: '🏆'; position: absolute; left: 0; }
+    .cta-container { text-align: center; margin-top: 2.5rem; }
+    .cta-button { background-color: rgba(96, 165, 250, 0.1); color: #a5b4fc; padding: 0.75rem 1.5rem; text-decoration: none; font-weight: 600; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.3); transition: all 0.3s ease; cursor: pointer; }
+    .cta-button:hover { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+    .hidden { display: none !important; }
+</style>
+<script>
+    // --- THIS IS THE ADDED SCRIPT FOR BUTTON FUNCTIONALITY ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // This is the on-scroll animation observer you already had
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = `${index * 100}ms`;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        // Make sure the observer watches all elements with the fade-in-up class within this component
+        const yearWrapper = document.getElementById('year-2023-2024');
+        if(yearWrapper) {
+            yearWrapper.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        }
+
+        // --- View More/Less Logic for this specific year ---
+        const CARDS_TO_SHOW_INITIALLY = 3;
+        const grid = document.getElementById('reports-grid-2023-2024');
+        if (!grid) return;
+
+        const allCards = Array.from(grid.querySelectorAll('.achievement-card'));
+        const loadMoreBtn = document.getElementById('load-more-btn-2023-2024');
+        const viewLessBtn = document.getElementById('view-less-btn-2023-2024');
+
+        const updateButtons = () => {
+            const hiddenCardsCount = grid.querySelectorAll('.achievement-card.hidden').length;
+            
+            if (allCards.length <= CARDS_TO_SHOW_INITIALLY) {
+                loadMoreBtn.classList.add('hidden');
+                viewLessBtn.classList.add('hidden');
+                return;
+            }
+
+            if (hiddenCardsCount > 0) {
+                loadMoreBtn.classList.remove('hidden');
+                viewLessBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.add('hidden');
+                viewLessBtn.classList.remove('hidden');
+            }
+        };
+
+        // Initial setup on page load
+        updateButtons();
+
+        loadMoreBtn.addEventListener('click', () => {
+            allCards.forEach(card => card.classList.remove('hidden'));
+            updateButtons();
+        });
+
+        viewLessBtn.addEventListener('click', () => {
+            allCards.forEach((card, index) => {
+                if (index >= CARDS_TO_SHOW_INITIALLY) {
+                    card.classList.add('hidden');
+                }
+            });
+            updateButtons();
+            // Scroll to the top of the section for a better UX
+            const section = document.getElementById('reports-grid-2023-2024').closest('.section-block');
+            if(section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+</script>

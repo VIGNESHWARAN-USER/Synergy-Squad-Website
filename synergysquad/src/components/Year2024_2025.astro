@@ -1,0 +1,195 @@
+---
+// src/components/Year2024_2025.astro
+const { data } = Astro.props;
+
+const tcsAssessments = [
+    { name: 'Assessment No 1', date: '07/10/2024', attended: 114 },
+    { name: 'Assessment No 2', date: '08/10/2024', attended: 123 },
+    { name: 'Assessment No 3', date: '09/10/2024', attended: 106 },
+    { name: 'Assessment No 4', date: '10/10/2024', attended: 71 },
+    { name: 'Assessment No 5', date: '11/10/2024', attended: 69 },
+    { name: 'Assessment No 6', date: '14/10/2024', attended: 79 },
+    { name: 'Assessment No 7', date: '15/10/2024', attended: 83 },
+];
+
+const knowAndGrowAssessments = [
+    { name: 'Assessment No 1', date: '28/01/2025', attended: 81 },
+    { name: 'Assessment No 2', date: '29/01/2025', attended: 122 },
+    { name: 'Assessment No 3', date: '30/01/2025', attended: 120 },
+    { name: 'Assessment No 4', date: '31/01/2025', attended: 107 },
+    { name: 'Assessment No 5', date: '01/02/2025', attended: 120 },
+];
+---
+<div class="year-container">
+    <div class="section-block fade-in-up">
+        <h3>Formation of Synergy Squad 2.0</h3>
+        <div class="summary-card">
+            <p>Following the success of Synergy Squad 1.0, the initiative was expanded to <strong>III Year CSE students</strong>. The identification process was conducted through <strong>7 Mock TCS CodeVita Assessments</strong>, where <strong>40 top-performing students</strong> were shortlisted from a total of <strong>179 students</strong> to enhance their coding proficiency, logical thinking, and problem-solving skills.</p>
+        </div>
+    </div>
+
+    <div class="section-block fade-in-up">
+        <h3>Intensive Technical Training Schedule</h3>
+        <div class="summary-card">
+             <p>A 3-day intensive program featuring <strong>Skill Enhancement Assessments</strong>, <strong>Knowledge Transfer Sessions</strong>, and <strong>Interactive Discussions on Programming MCQs</strong> to rapidly boost technical capabilities.</p>
+        </div>
+    </div>
+    
+    <div class="section-block fade-in-up">
+        <h3>Summary of 7 Mock TCS CodeVita Assessments</h3>
+        <div class="table-container three-col">
+            <div class="table-header"><div>Activity Name</div><div>Date Conducted</div><div>Students Attended</div></div>
+            {tcsAssessments.map(item => (
+                <div class="table-row"><div>{item.name}</div><div>{item.date}</div><div>{item.attended}</div></div>
+            ))}
+        </div>
+    </div>
+
+    <div class="section-block fade-in-up">
+        <h3>5 Know and Grow Assessments - Summary</h3>
+        <div class="table-container three-col">
+            <div class="table-header"><div>Assessment No.</div><div>Date Conducted</div><div>Students Attended</div></div>
+            {knowAndGrowAssessments.map(item => (
+                <div class="table-row"><div>{item.name}</div><div>{item.date}</div><div>{item.attended}</div></div>
+            ))}
+        </div>
+    </div>
+
+    {data.weeklyActivities.length > 0 &&
+        <div class="section-block fade-in-up">
+            <h3>Weekly Activity Summary</h3>
+            <div class="table-container">
+                <div class="table-header"><div>Activity Name</div><div>Date Conducted</div></div>
+                {data.weeklyActivities.map(activity => (
+                    <div class="table-row"><div>{activity.name}</div><div>{activity.date}</div></div>
+                ))}
+            </div>
+        </div>
+    }
+
+    {data.topperLists.length > 0 &&
+        <div class="section-block dark-section fade-in-up">
+            <h3>Activity Execution Reports</h3>
+            <div class="achievements-grid" id="reports-grid-2024-2025">
+                {data.topperLists.map((achievement, index) => (
+                    <div class:list={['achievement-card', { hidden: index >= 3 }]} data-index={index}>
+                        <div class="image-container"><img src={achievement.imageUrl} alt={achievement.title} loading="lazy"/></div>
+                        <div class="content-container">
+                            <h4>{achievement.title}</h4>
+                            <ul class="toppers-list">{achievement.toppers.map(topper => <li>{topper}</li>)}</ul>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <!-- ADDED BUTTONS -->
+            <div class="cta-container">
+                <button class="cta-button" id="load-more-btn-2024-2025">View More Reports</button>
+                <button class="cta-button hidden" id="view-less-btn-2024-2025">View Less</button>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    /* Your exact styles are preserved */
+    .year-container { max-width: 1200px; margin: auto; padding: 3rem 1.5rem; }
+    .section-block { margin-bottom: 3rem; }
+    h3 { font-size: 1.75rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.75rem; }
+    .summary-card { background-color: #fff; border: 1px solid var(--border-color); padding: 2rem; border-radius: 12px; }
+    .summary-card p { font-size: 1.1rem; line-height: 1.8; margin: 0; }
+    .summary-card strong { color: var(--primary-color); font-weight: 600; }
+    .table-container { background-color: #fff; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; max-width: 800px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .table-header, .table-row { display: grid; align-items: center; padding: 1rem; }
+    .table-header { font-weight: 600; background-color: #c8d7e8; }
+    .table-row { border-top: 1px solid var(--border-color); }
+    .table-header, .table-row { grid-template-columns: 2fr 1fr; }
+    .table-row div:last-child { text-align: right; }
+    .table-container.three-col .table-header, .table-container.three-col .table-row { grid-template-columns: 1fr 1fr 1fr; }
+    .table-container.three-col div { text-align: center; }
+    .table-container.three-col div:first-child { text-align: left; }
+    .dark-section { background-color: #0f172a; color: #e2e8f0; padding: 3rem; border-radius: 16px; margin-top: 3rem; }
+    .dark-section h3 { border-color: #1e293b; color: #fff; }
+    .achievements-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    @media (max-width: 1024px) { .achievements-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .achievements-grid { grid-template-columns: 1fr; } }
+    .achievement-card { background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; display: flex; flex-direction: column; transition: all 0.3s ease; }
+    .achievement-card:hover { transform: translateY(-5px); border-color: rgba(96, 165, 250, 0.5); }
+    .image-container { border-top-left-radius: 15px; border-top-right-radius: 15px; overflow: hidden; aspect-ratio: 4 / 5; }
+    .image-container img { width: 100%; height: 100%; object-fit: cover; }
+    .content-container { padding: 1.25rem; }
+    h4 { font-size: 1rem; font-weight: 600; margin: 0 0 1rem; color: #fff; }
+    .toppers-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .toppers-list li { font-size: 0.875rem; color: #cbd5e1; padding-left: 1.5rem; position: relative; }
+    .toppers-list li::before { content: '🏆'; position: absolute; left: 0; }
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+    
+    /* ADDED STYLES FOR BUTTONS */
+    .cta-container { text-align: center; margin-top: 2.5rem; }
+    .cta-button { background-color: rgba(96, 165, 250, 0.1); color: #a5b4fc; padding: 0.75rem 1.5rem; text-decoration: none; font-weight: 600; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.3); transition: all 0.3s ease; cursor: pointer; }
+    .cta-button:hover { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+    .hidden { display: none !important; }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // This is the on-scroll animation observer you already had
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = `${index * 100}ms`;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        const yearWrapper = document.getElementById('year-2024-2025');
+        if (yearWrapper) {
+            yearWrapper.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        }
+
+        // --- ADDED View More/Less Logic for this specific year ---
+        const CARDS_TO_SHOW_INITIALLY = 3;
+        const grid = document.getElementById('reports-grid-2024-2025');
+        if (!grid) return;
+        const allCards = Array.from(grid.querySelectorAll('.achievement-card'));
+        const loadMoreBtn = document.getElementById('load-more-btn-2024-2025');
+        const viewLessBtn = document.getElementById('view-less-btn-2024-2025');
+
+        const updateButtons = () => {
+            const hiddenCardsCount = grid.querySelectorAll('.achievement-card.hidden').length;
+            if (allCards.length <= CARDS_TO_SHOW_INITIALLY) {
+                loadMoreBtn.classList.add('hidden');
+                viewLessBtn.classList.add('hidden');
+                return;
+            }
+            if (hiddenCardsCount > 0) {
+                loadMoreBtn.classList.remove('hidden');
+                viewLessBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.add('hidden');
+                viewLessBtn.classList.remove('hidden');
+            }
+        };
+
+        // Initial setup
+        updateButtons();
+
+        loadMoreBtn.addEventListener('click', () => {
+            allCards.forEach(card => card.classList.remove('hidden'));
+            updateButtons();
+        });
+
+        viewLessBtn.addEventListener('click', () => {
+            allCards.forEach((card, index) => {
+                if (index >= CARDS_TO_SHOW_INITIALLY) {
+                    card.classList.add('hidden');
+                }
+            });
+            updateButtons();
+            const section = grid.closest('.section-block');
+            if(section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,138 @@
+---
+// src/pages/achievements.astro
+import Layout from '../layouts/Layout.astro';
+import Year2023_2024 from '../components/Year2023_2024.astro';
+import Year2024_2025 from '../components/Year2024_2025.astro';
+import Year2025_2026 from '../components/Year2025_2026.astro';
+
+// Data for 2023-2024
+const yearData_2023_2024 = {
+    weeklyActivities: [
+        { name: 'Pattern Day', date: '21-01-2024' },
+        { name: 'Mastering in Array Day', date: '28-01-2024' },
+        { name: 'Mastering in Strings Day', date: '04-02-2024' },
+        { name: 'C Programming MCQ Day', date: '11-02-2024' },
+        { name: 'C Programming Master Class Day', date: '18-02-2024' },
+        { name: 'Mock TCS Ninja NQT Challenge Day', date: '25-02-2024' },
+        { name: 'Mock Wipro NLTH Challenge Day', date: '10-03-2024' },
+        { name: 'Mock Pratian Technologies Challenge Day', date: '24-03-2024' },
+    ],
+    topperLists: [
+       { title: 'WEEK 1: Pattern Day', imageUrl: '/years/squad 1/week 1.png', toppers: ['Anuvarshini T R', 'Keerthana D', 'Vijay K R'] },
+{ title: 'WEEK 2: Mastering in Array Day', imageUrl: '/years/squad 1/week 2.png', toppers: ['Jeevanandhan J', 'Karthikeyan S', 'Shriyaa S V'] },
+{ title: 'WEEK 3: Mastering in Strings Day', imageUrl: '/years/squad 1/week 3.png', toppers: ['AASHA S', 'KARTHIKEYAN S', 'VIBHAV M'] }, // Corresponds to 'STRING DAY' image
+{ title: 'WEEK 4: C Programming MCQ Day', imageUrl: '/years/squad 1/week 4.png', toppers: ['Jeslin Maria Jacob (83)', 'Subasri C (66)'] }, // No image for this, keeping original
+{ title: 'WEEK 5: C Programming Master Class Day', imageUrl: '/years/squad 1/week 5.png', toppers: ['AASHA S', 'KARTHIKEYAN S', 'VIBHAV M'] }, // Assuming this corresponds to 'STRING DAY' image
+{ title: 'WEEK 6: MOCK TCS NQT Challenge Day', imageUrl: '/years/squad 1/week 6.png', toppers: ['Anuvarshini T R', 'Rasika S', 'Vijay K R'] },
+{ title: 'WEEK 7: Mock Wipro NLTH Challenge Day', imageUrl: '/years/squad 1/week 7.png', toppers: ['Gayathri R, III-CSE-A', 'Nithish Kumar, III-CSE-B', 'Shabari K S, III-CSE-C'] },
+    ]
+};
+
+// Data for 2024-2025
+const yearData_2024_2025 = {
+    weeklyActivities: [
+        { name: 'Pattern Programming Exploration Day', date: '30-09-2024' },
+        { name: 'Control Flow Mastery Day', date: '06-10-2024' },
+        { name: 'Array Optimization Master Class Day', date: '13-10-2024' },
+        { name: 'Efficient String Manipulation Day', date: '20-10-2024' },
+        { name: 'Hundred - Fold C Proficiency Test', date: '27-10-2024' },
+    ],
+    topperLists: [
+        { title: 'WEEK 1: Pattern Programming Exploration Day', imageUrl: '/years/squad 2/week 1.png', toppers: ['Gayathri M III - CSE - A 92/100', 'Kanishka N III - CSE - B 50/100', 'Ramesh M III - CSE - C 90/100'] },
+  { title: 'WEEK 2: The Control Flow Mastery Day', imageUrl: '/years/squad 2/week 2.png', toppers: ['Bharathi S - 92/100', 'Kanishka N - 86/100', 'Vigneshwaran M - 88/100'] },
+  { title: 'WEEK 3: Array Optimization Masterclass', imageUrl: '/years/squad 2/week 3.png', toppers: ['Vigneshwaran M III CSE-C 94/100 RSG', 'Vigneshwaran M III CSE-C 92/100 TPR', 'Kavitha S III CSE-B 89/ 100 SD'] },
+  { title: 'WEEK 4: Efficient String Manipulation Day', imageUrl: '/years/squad 2/week 4.png', toppers: ['Ramesh M III CSE C 94/100', 'Subasree GS III cse C 92/100', 'Praveen P III CSE C 84/100'] },
+  { title: 'WEEK 5: Hundred-Fold C Proficiency Test', imageUrl: '/years/squad 2/week 5.png', toppers: ['SathyaSri V - III CSE C 87/100', 'Jeevanna M - III CSE B 86/100', 'Praveen P - III CSE C 81/100'] }
+    ]
+};
+
+// Data for 2025-2026
+const yearData_2025_2026 = {
+    weeklyActivities: [
+        { name: 'Pattern Play Day', date: '10-08-2025' },
+        { name: 'Array Mastery Quest Day', date: '17-08-2025' },
+        { name: 'String Hacker\'s Day', date: '24-08-2025' },
+        { name: 'Century in C Day', date: '31-08-2025' },
+        { name: 'OOPS Explore Day', date: '07-09-2025' },
+        { name: 'TCS Mock Sprint Day', date: '14-09-2025' },
+        { name: 'Wipro Warriors: NLTH Mock Day', date: '21-09-2025' },
+        { name: 'Pratian Prep Battle Day', date: '28-09-2025' },
+    ],
+    topperLists: [
+          { title: 'WEEK 1: Pattern Play Day!', imageUrl: '/events-image/week-1.jpeg', toppers: ['DHINESHKUMAR M 90/100', 'SUDHAKAR S 80/100', 'Giri N III - CSE - A 70/100', 'Naveen Prasath III - CSE - B 70/100', 'Nishanth M III - CSE - B 70/100', 'Tharankumar G III - CSE - C 70/100'] },
+  { title: 'WEEK 2: Array Mastery Quest Day', imageUrl: '/events-image/week-2.jpeg', toppers: ['Subashree V P III/CSE/C 100/100', 'Dhineshkumar III/CSE/A 97/100', 'Hari Dev M V III/CSE/A 90/100'] },
+  { title: 'WEEK 3: String Hacker\'s Day', imageUrl: '/events-image/week-3.jpeg', toppers: ['Adithya N V', 'Dhineshkumar M', 'Naveen Prasath III - CSE - B', 'Pooja M III - CSE - B', 'Prakalya R G III - CSE - B'] },
+  { title: 'WEEK 4: Century in C Day', imageUrl: '/events-image/week-4.jpeg', toppers: ['Veera Sowndarya V', 'Prakalya RG', 'Dinesh G III - CSE - A', 'Pooja M III - CSE - B'] },
+  { title: 'WEEK 5: OOPS Explorer Day!', imageUrl: '/events-image/week-5.jpeg', toppers: ['Dhineshkumar M 100/100', 'Subhashree V P 100/100', 'Nishanth M 73/100'] },
+  { title: 'WEEK 6: TCS Mock Sprint Day', imageUrl: '/events-image/week-6.jpeg', toppers: ['ADITYA N V III-CSE-A 100/100', 'SUBASHREE V P III-CSE-B 100/100', 'SANJAY S 88/100', 'SHRESARAN K 88/100', 'PRASANNA V 88/100', 'POOJA M 88/100', 'DHANUSHIYA S 88/100', 'PUNITHAS 88/100', 'RAMYA S G 84/100'] },
+  { title: 'WEEK 7: Wipro Warriors - NLTH Mock Day', imageUrl: '/events-image/week-7.jpeg', toppers: ['ADITYA N V 100/100', 'KISHORE D III-CSE-B 100/100', 'SUBHASHREE III CSE-B 100/100', 'DHINESHKUMAR M 94/100', 'ELANGO K 94/100', 'SUBHARANJINI M 92/100'] },
+  { title: 'WEEK 8: ZOHO Quest Prep Day', imageUrl: '/events-image/week-8.jpeg', toppers: ['DHINESHKUMAR M III - CSE - A', 'JEEVA VIGNESH III - CSE - B', 'SUBHASHREE P III - CSE - B', 'ADITYA NV III - CSE - A', 'SHREE SARAN III - CSE - C'] }
+    ]
+};
+---
+<Layout title="Achievements Archive - Synergy Squad">
+    <div class="archive-header">
+        <h1>Achievements Archive</h1>
+        <p>A complete history of Synergy Squad's programming activities, challenges, and top performers, organized by academic year.</p>
+    </div>
+    
+    <div class="year-tabs" id="year-tabs">
+        <button class="year-tab active" data-target="year-2023-2024">2023-2024</button>
+        <button class="year-tab" data-target="year-2024-2025">2024-2025</button>
+        <button class="year-tab" data-target="year-2025-2026">2025-2026</button>
+    </div>
+
+    <main class="archive-content">
+        <div class="year-content-wrapper is-active" id="year-2023-2024">
+            <Year2023_2024 data={yearData_2023_2024} />
+        </div>
+        <div class="year-content-wrapper" id="year-2024-2025">
+            <Year2024_2025 data={yearData_2024_2025} />
+        </div>
+        <div class="year-content-wrapper" id="year-2025-2026">
+            <Year2025_2026 data={yearData_2025_2026} />
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .archive-header { text-align: center; padding: 0.5rem 1.5rem 3rem; background-color: #fff; border-bottom: 1px solid var(--border-color); }
+    .archive-header h1 { font-size: 3rem; font-weight: 900; margin: 0 0 1rem; }
+    .archive-header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 60ch; margin: auto; }
+    .year-tabs { display: flex; justify-content: center; gap: 0.5rem; padding: 1.5rem; background-color: var(--background-color); position: sticky; top: 73px; z-index: 5; border-bottom: 1px solid var(--border-color); }
+    .year-tab { padding: 0.75rem 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: #fff; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+    .year-tab:hover { background-color: var(--primary-color-hover); color: #fff; border-color: var(--primary-color-hover); }
+    .year-tab.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+    .year-content-wrapper { display: none; }
+    .year-content-wrapper.is-active { display: block; }
+
+    /* --- THIS IS THE UPDATE FOR MOBILE VIEW --- */
+    @media (max-width: 768px) {
+        .archive-header h1 {
+            font-size: 2.5rem;
+        }
+        .year-tabs {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.year-tab');
+        const contentWrappers = document.querySelectorAll('.year-content-wrapper');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contentWrappers.forEach(c => c.classList.remove('is-active'));
+                tab.classList.add('active');
+                const targetId = tab.dataset.target;
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    targetContent.classList.add('is-active');
+                }
+            });
+        });
+    });
+</script>

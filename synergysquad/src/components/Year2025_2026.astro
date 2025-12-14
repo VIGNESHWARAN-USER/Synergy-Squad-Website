@@ -1,0 +1,158 @@
+---
+// src/components/Year2025_2026.astro
+const { data } = Astro.props;
+---
+<div class="year-container">
+    <!-- 1. Main Summary -->
+    <div class="section-block fade-in-up">
+        <h3>Weekly Sunday Programming Activities for III Year Students</h3>
+        <div class="summary-card">
+            <p>To enhance the programming skills, logical thinking, and placement preparedness of the students, a new series of Weekly Sunday Programming Activities was organized. Each session was specially designed to reinforce programming concepts and simulate real-time coding challenges.</p>
+        </div>
+    </div>
+
+    <!-- 2. Weekly Activity Schedule -->
+    <div class="section-block fade-in-up">
+        <h3>Detailed Schedule</h3>
+        <div class="table-container three-col">
+            <div class="table-header"><div>Week No</div><div>Activity Name</div><div>Planned Date</div></div>
+            {data.weeklyActivities.map((activity, index) => (
+                <div class="table-row">
+                    <div>{index + 1}</div>
+                    <div>{activity.name}</div>
+                    <div>{activity.date}</div>
+                </div>
+            ))}
+        </div>
+    </div>
+    
+    <!-- 3. Activity Execution Reports (Restored) -->
+    {data.topperLists && data.topperLists.length > 0 &&
+        <div class="section-block dark-section fade-in-up">
+            <h3>Activity Execution Reports</h3>
+            <div class="achievements-grid" id="reports-grid-2025-2026">
+                {data.topperLists.map((achievement, index) => (
+                    <div class:list={['achievement-card', { hidden: index >= 3 }]}>
+                        <div class="image-container"><img src={achievement.imageUrl} alt={achievement.title} loading="lazy"/></div>
+                        <div class="content-container">
+                            <h4>{achievement.title}</h4>
+                            <ul class="toppers-list">{achievement.toppers.map(topper => <li>{topper}</li>)}</ul>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div class="cta-container">
+                <button class="cta-button" id="load-more-btn-2025-2026">View More Reports</button>
+                <button class="cta-button hidden" id="view-less-btn-2025-2026">View Less</button>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    /* All styles are now included and correct */
+    .year-container { max-width: 1200px; margin: auto; padding: 3rem 1.5rem; }
+    .section-block { margin-bottom: 3rem; }
+    h3 { font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.75rem; }
+    .summary-card { background-color: #fff; border: 1px solid var(--border-color); padding: 2rem; border-radius: 12px; }
+    .summary-card p { font-size: 1.1rem; line-height: 1.8; margin: 0; }
+    
+    .table-container { background-color: #fff; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; max-width: 900px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .table-header, .table-row { display: grid; grid-template-columns: 100px 2fr 1fr; padding: 1rem; align-items: center; }
+    .table-header { font-weight: 600; background-color: #f8fafc; }
+    .table-row { border-top: 1px solid var(--border-color); }
+    .table-row div:first-child, .table-row div:last-child { text-align: center; }
+    .table-row div:nth-child(2) { text-align: left; }
+    .table-header div:first-child, .table-header div:last-child { text-align: center; }
+    .table-header div:nth-child(2) { text-align: left; }
+    
+    .dark-section { background-color: #0f172a; color: #e2e8f0; padding: 3rem; border-radius: 16px; margin-top: 3rem; }
+    .dark-section h3 { border-color: #1e293b; color: #fff; }
+    .achievements-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    @media (max-width: 1024px) { .achievements-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .achievements-grid { grid-template-columns: 1fr; } }
+    .achievement-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px; display: flex; flex-direction: column;
+        transition: all 0.3s ease;
+    }
+    .achievement-card:hover { transform: translateY(-5px); border-color: rgba(96, 165, 250, 0.5); }
+    .image-container { border-top-left-radius: 15px; border-top-right-radius: 15px; overflow: hidden; aspect-ratio: 4 / 5; }
+    .image-container img { width: 100%; height: 100%; object-fit: cover; }
+    .content-container { padding: 1.25rem; }
+    h4 { font-size: 1rem; font-weight: 600; margin: 0 0 1rem; color: #fff; }
+    .toppers-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .toppers-list li { font-size: 0.875rem; color: #cbd5e1; padding-left: 1.5rem; position: relative; }
+    .toppers-list li::before { content: '🏆'; position: absolute; left: 0; }
+    
+    .cta-container { text-align: center; margin-top: 2.5rem; }
+    .cta-button { background-color: rgba(96, 165, 250, 0.1); color: #a5b4fc; padding: 0.75rem 1.5rem; text-decoration: none; font-weight: 600; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.3); transition: all 0.3s ease; cursor: pointer; }
+    .cta-button:hover { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+    .hidden { display: none !important; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = `${index * 100}ms`;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        const yearWrapper = document.getElementById('year-2025-2026');
+        if (yearWrapper) {
+            yearWrapper.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        }
+
+        const CARDS_TO_SHOW_INITIALLY = 3;
+        const grid = document.getElementById('reports-grid-2025-2026');
+        if (!grid) return;
+        const allCards = Array.from(grid.querySelectorAll('.achievement-card'));
+        const loadMoreBtn = document.getElementById('load-more-btn-2025-2026');
+        const viewLessBtn = document.getElementById('view-less-btn-2025-2026');
+        
+        const updateButtons = () => {
+            const hiddenCardsCount = grid.querySelectorAll('.achievement-card.hidden').length;
+            if (allCards.length <= CARDS_TO_SHOW_INITIALLY) {
+                loadMoreBtn.classList.add('hidden');
+                viewLessBtn.classList.add('hidden');
+                return;
+            }
+            if (hiddenCardsCount > 0) {
+                loadMoreBtn.classList.remove('hidden');
+                viewLessBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.add('hidden');
+                viewLessBtn.classList.remove('hidden');
+            }
+        };
+
+        updateButtons();
+
+        loadMoreBtn.addEventListener('click', () => {
+            allCards.forEach(card => card.classList.remove('hidden'));
+            updateButtons();
+        });
+
+        viewLessBtn.addEventListener('click', () => {
+            allCards.forEach((card, index) => {
+                if (index >= CARDS_TO_SHOW_INITIALLY) {
+                    card.classList.add('hidden');
+                }
+            });
+            updateButtons();
+            const section = grid.closest('.section-block');
+            if(section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+</script>

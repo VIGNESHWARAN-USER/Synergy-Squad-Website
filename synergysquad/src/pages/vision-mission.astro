@@ -1,0 +1,186 @@
+---
+// src/pages/vision-mission.astro
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Vision & Mission - Synergy Squad">
+
+    <div class="page-wrapper">
+        <header class="page-header">
+            <div class="header-content">
+                <h1 class="page-title">Vision & Mission</h1>
+                <p class="page-subtitle">The driving principles behind Synergy Squad's commitment to excellence.</p>
+            </div>
+        </header>
+
+        <main class="content-container">
+            <div class="vision-mission-grid">
+                <!-- Vision Block -->
+                <div class="content-block fade-in-up">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                            <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a.75.75 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h2>Our Vision</h2>
+                    <p>
+                        To be the leading student-run coding club that empowers every student at the Knowledge Institute of Technology to excel in competitive programming and secure careers at top-tier technology companies.
+                    </p>
+                </div>
+
+                <!-- Mission Block -->
+                <div class="content-block fade-in-up">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M15.22 6.22a.75.75 0 011.06 0l1.25 1.25a.75.75 0 010 1.06l-1.25 1.25a.75.75 0 01-1.06 0l-1.25-1.25a.75.75 0 010-1.06l1.25-1.25zM16.5 9.31l-1.22-1.22L12 11.366l1.22 1.22 3.28-3.276z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M12.75 3a.75.75 0 00-1.5 0v2.25l1.5 1.5V3zm-2.5 4.936l-1.22-1.22a.75.75 0 00-1.06 1.06l1.22 1.22 1.06-1.06zM10.073 9.427l-1.22 1.22-3.276-3.28a.75.75 0 00-1.06 1.06l3.276 3.28-1.22 1.22a.75.75 0 101.06 1.06l1.22-1.22 1.22 1.22a.75.75 0 001.06-1.06l-1.22-1.22 1.22-1.22a.75.75 0 00-1.06-1.06zM13.5 14.25v2.25l1.5 1.5V15l-1.5-.75z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M3.75 12a8.25 8.25 0 1016.5 0 8.25 8.25 0 00-16.5 0zM12 21a9 9 0 100-18 9 9 0 000 18z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h2>Our Mission</h2>
+                    <p>
+                        Our mission is to foster a vibrant and inclusive coding culture through consistent, high-quality weekly challenges and company-specific training...
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <section class="genesis-section">
+        <div class="genesis-container">
+            <div class="section-header fade-in-up">
+                <h2 class="section-title">Our Genesis</h2>
+            </div>
+             <div class="genesis-content">
+                <p class="fade-in-up">Synergy Squad was forged from the <strong>Pre-Placement Readiness Initiative</strong>, designed to elevate the technical proficiency of our students. Our formation process is rigorous and merit-based: prospective members undergo a series of intensive Practice Assessments, including mock company-specific tests like the TCS CodeVita.</p>
+                <p class="fade-in-up">Based on performance, a select group of top candidates are invited to form the squad for that academic year. This exclusive group then receives specialized, intensive training focused on advanced problem-solving, data structures, and algorithms to prepare them for competitive programming on a national level.</p>
+                <p class="fade-in-up">The cornerstone of our activity is the <strong>"Weekly Programming Day,"</strong> a structured event designed to continuously strengthen coding skills through consistent practice and targeted assessments, ensuring our members are always ready for the next challenge.</p>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .page-wrapper {
+        background-color: var(--background-color);
+        padding-bottom: 5rem;
+    }
+    .page-header {
+        background-image: linear-gradient(rgba(10, 20, 40, 0.7), rgba(10, 20, 40, 0.7)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072');
+        background-size: cover; background-position: center;
+        padding: 6rem 1.5rem;
+        text-align: center; color: #fff;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    .header-content { animation: fadeIn 1s ease-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .page-title {
+        font-size: 3.5rem; font-weight: 900;
+        color: #FFFFFF;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8), 0 0 15px rgba(96, 165, 250, 0.4), 0 0 30px rgba(96, 165, 250, 0.3);
+    }
+    .page-subtitle {
+        font-size: 1.25rem; max-width: 50ch; margin: 1rem auto 0;
+        opacity: 0.9; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    
+    .content-container {
+        max-width: 1200px; margin: auto; padding: 0 1.5rem;
+        margin-top: -80px;
+    }
+    .vision-mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+    .content-block {
+        background-color: #ffffff; padding: 2.5rem; border-radius: 16px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 20px 40px -10px rgb(0 0 0 / 0.1);
+        text-align: center; height: 100%;
+        position: relative; overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .content-block:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+    }
+    .content-block::after {
+        content: ''; position: absolute; top: 0; left: 0;
+        width: 100%; height: 100%;
+        border-radius: 16px; border: 2px solid transparent;
+        background: linear-gradient(45deg, var(--primary-color), #a5b4fc) border-box;
+        -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .content-block:hover::after { opacity: 1; }
+
+    .icon-wrapper { margin-bottom: 1.5rem; }
+    .icon-wrapper svg { width: 48px; height: 48px; color: var(--primary-color); }
+    .content-block h2 { font-size: 2rem; font-weight: 800; margin-top: 0; margin-bottom: 1rem; position: relative; z-index: 2; }
+    .content-block p { font-size: 1.125rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 0; position: relative; z-index: 2;}
+    
+    .genesis-section {
+        background-color: #0f172a; color: #cbd5e1;
+        padding: 6rem 1.5rem;
+        border-top: 2px solid;
+        border-image-source: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        border-image-slice: 1;
+    }
+    .genesis-container { max-width: 800px; margin: auto; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-title { font-size: 2.5rem; font-weight: 800; color: #fff; }
+    .genesis-content p { font-size: 1.1rem; line-height: 1.9; margin-bottom: 1.5rem; }
+    .genesis-content p:last-child { margin-bottom: 0; }
+    .genesis-content strong { font-weight: 600; color: #a5b4fc; }
+
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* --- THIS IS THE UPDATE FOR MOBILE VIEW --- */
+    @media (max-width: 768px) {
+        .vision-mission-grid { 
+            grid-template-columns: 1fr; 
+        }
+        .page-header {
+            padding: 2rem 1.5rem; /* Reduced padding */
+        }
+        .page-title {
+            font-size: 2.5rem; /* Smaller title */
+        }
+        .page-subtitle {
+            font-size: 1.1rem; /* Smaller subtitle */
+        }
+        .content-container {
+            margin-top: -60px; /* Adjusted negative margin */
+        }
+        .content-block {
+            padding: 2rem; /* Less padding on cards */
+            margin-top: 3rem;
+        }
+        .genesis-section {
+            padding: 4rem 1.5rem; /* Reduced padding */
+        }
+        .section-title {
+            font-size: 2rem; /* Smaller section title */
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = document.querySelectorAll('.fade-in-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = `${index * 150}ms`;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        elements.forEach(element => observer.observe(element));
+    });
+</script>

@@ -1,0 +1,40 @@
+---
+// src/components/Ticker.astro
+const tickerText = "CCL Preliminary Round is officially wrapped. From 857 registrations, 357 coded their way through. The top 200 will compete in the 12-hour Campus Coders League Finals on December 26, 2025. Stay tuned for more updates!";
+---
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>{tickerText}</span>
+  </div>
+</div>
+
+<style>
+  .ticker-wrap {
+    width: 100%;
+    overflow: hidden; /* Hides the text that's outside the container */
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.5rem 0;
+  }
+
+  .ticker {
+    display: inline-block;
+    white-space: nowrap; /* Prevents the text from wrapping to a new line */
+    padding-left: 100%;
+    animation: ticker-animation 40s linear infinite; /* The scrolling animation */
+  }
+
+  .ticker span {
+    display: inline-block;
+  }
+
+  /* Defines the scrolling keyframes */
+  @keyframes ticker-animation {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%); /* Moves the text to the left */
+    }
+  }
+</style>

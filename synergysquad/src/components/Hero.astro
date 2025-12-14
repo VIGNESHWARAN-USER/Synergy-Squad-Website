@@ -1,0 +1,105 @@
+---
+// src/components/Hero.astro
+---
+
+<section class="hero">
+  <div class="video-background">
+    <video id="heroVideo" autoplay loop muted playsinline poster="/images/hero-fallback.jpg">
+      <source src="/videos/ss-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+
+
+<!-- JavaScript logic for responsive video source -->
+<script>
+  const video = document.getElementById('heroVideo');
+
+  function setVideoSource() {
+    const isMobile = window.innerWidth <= 768;
+    const newSrc = isMobile ? '/videos/ss-video-1.mp4' : '/videos/ss-video.mp4';
+
+    if (video.getAttribute('data-current-src') !== newSrc) {
+      video.pause();
+      video.setAttribute('data-current-src', newSrc);
+      video.querySelector('source').setAttribute('src', newSrc);
+      video.load();
+      video.play();
+    }
+  }
+
+  // Initial load
+  setVideoSource();
+
+  // Update on window resize (debounced)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(setVideoSource, 300);
+  });
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    color: var(--text-primary-inverted, #ffffff);
+  }
+
+  .video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .video-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 900px;
+    padding: 0 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 15px var(--primary-color-glow, rgba(79, 70, 229, 0.4));
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    max-width: 65ch;
+    margin: 0 auto;
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      height: 75vh;
+    }
+    .hero-title {
+      font-size: 2.75rem;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+  }
+</style>

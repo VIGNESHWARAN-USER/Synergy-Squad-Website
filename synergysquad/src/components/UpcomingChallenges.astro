@@ -1,0 +1,478 @@
+---
+// src/components/UpcomingChallenges.astro
+
+const challenges = [
+    { 
+        title: 'CCL Coding Challenge', 
+        description: 'The CCL Coding Challenge hits on 26 December 2025. Only skill decides who stands at the top.', 
+        posterUrl: '/upcoming/CCL.jpeg', 
+        status: 'upcoming', 
+        button: 'Form Team', 
+        secondaryButton: 'View Teams', // Added this property
+        id: 'ccl-challenge'
+    },
+    { title: 'CCL Qualifier Round', description: 'The battle begins with 860 coders. Only the top 200 move on to the CCL Challenge, 26 December 2025.', posterUrl: '/upcoming/CCL.jpeg', status: 'completed' },
+    { title: 'CODE-A-THAN Qualifier Round', description: ' A national innovation marathon where sharp minds unite to solve real-world challenges...', posterUrl: '/upcoming/codeathon.jpeg', status: 'completed' },
+    { title: 'CODE-A-THAN Final round', description: 'The ultimate 8-hour coding challenge. Compete for the national title...', posterUrl: '/upcoming/codeathon.jpeg', status: 'completed' }
+];
+---
+
+<section class="upcoming-challenges fade-in-up">
+    <div class="container">
+        <h2 class="section-title">Challenges Updates</h2>
+        <div id="challenges-slider" class="splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    {challenges.map(challenge => (
+                        <li class="splide__slide">
+                            <div class="challenge-card">
+                                <div class="poster-container">
+                                    <img src={challenge.posterUrl} alt={challenge.title} class="challenge-poster" />
+                                    {challenge.status !== 'placeholder' && (
+                                        <div class:list={['status-tag', 'mobile-tag', challenge.status]}>
+                                            <span class="status-dot"></span>
+                                            <span class="status-text">{challenge.status.toUpperCase()}</span>
+                                        </div>
+                                    )}
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-text">
+                                        <h3>{challenge.title}</h3>
+                                        <p>{challenge.description}</p>
+                                    </div>
+                                    <div class="statusbutton">
+                                        {challenge.status !== 'placeholder' && (
+                                            <div class:list={['status-tag', 'desktop-tag', challenge.status]}>
+                                                <span class="status-dot"></span>
+                                                <span class="status-text">{challenge.status.toUpperCase()}</span>
+                                            </div>
+                                        )}
+                                        <div class="btn-group">
+                                            {challenge.secondaryButton && (
+                                                <button class="action-button secondary view-teams-trigger">{challenge.secondaryButton}</button>
+                                            )}
+                                            {challenge.button && (
+                                                <button class="action-button primary form-team-trigger" data-challenge-id={challenge.id}>{challenge.button}</button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: FORM TEAM -->
+    <div id="team-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-modal close-form-modal">&times;</button>
+            <div class="modal-header">
+                <h3>Form Your Team</h3>
+                <p>CCL Coding Challenge</p>
+            </div>
+
+            <!-- STEP 1: Email Input -->
+            <div id="step-1" class="form-step">
+                <label for="tl-email">Team Leader Email</label>
+                <input type="email" id="tl-email" placeholder="e.g. 2k24cse001@kiot.ac.in" required />
+                <button id="send-otp-btn" class="modal-btn">Send OTP</button>
+            </div>
+
+            <!-- STEP 2: OTP Verification -->
+            <div id="step-2" class="form-step hidden">
+                <label>Enter 4-Digit OTP</label>
+                <p class="info-text">We sent a code to <strong id="display-email"></strong></p>
+                <div class="otp-container">
+                    <input type="text" class="otp-input" maxlength="1" />
+                    <input type="text" class="otp-input" maxlength="1" />
+                    <input type="text" class="otp-input" maxlength="1" />
+                    <input type="text" class="otp-input" maxlength="1" />
+                </div>
+                <button id="verify-otp-btn" class="modal-btn">Verify & Proceed</button>
+            </div>
+
+            <!-- STEP 3: Team Details -->
+            <div id="step-3" class="form-step hidden">
+                <div class="input-group">
+                    <label for="team-name">Team Name</label>
+                    <input type="text" id="team-name" placeholder="e.g., The Algorists" required />
+                    <small>Only letters and numbers allowed.</small>
+                </div>
+                <div class="input-group">
+                    <label for="member-2">Team Member 2</label>
+                    <select id="member-2" class="member-select">
+                        <option value="">Select a student...</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="member-3">Team Member 3</label>
+                    <select id="member-3" class="member-select">
+                        <option value="">Select a student...</option>
+                    </select>
+                </div>
+                <button id="create-team-btn" class="modal-btn success">Create Team</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: VIEW TEAMS (NEW) -->
+    <div id="view-modal" class="modal-overlay hidden">
+        <div class="modal-content wide-content">
+            <button class="close-modal close-view-modal">&times;</button>
+            <div class="modal-header">
+                <h3>Registered Teams</h3>
+                <p>CCL Coding Challenge Participants</p>
+            </div>
+            
+            <div class="table-container">
+                <table class="teams-table">
+                    <thead>
+                        <tr>
+                            <th>Team Name</th>
+                            <th>Leader (Dept)</th>
+                            <th>Member 2 (Dept)</th>
+                            <th>Member 3 (Dept)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teams-table-body">
+                        <!-- Rows injected via JS -->
+                    </tbody>
+                </table>
+                <div id="loading-text" class="info-text hidden">Loading teams...</div>
+                <div id="no-teams-text" class="info-text hidden">No teams registered yet.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* --- EXISTING STYLES (Kept mostly same, added button group styles) --- */
+    .upcoming-challenges { padding: 4rem 1.5rem; overflow: hidden; position: relative; }
+    .container { max-width: 1200px; margin: auto; }
+    .section-title { font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 3rem; color: #1e3a8a; }
+    .splide__slide { padding: 0.5rem; }
+    
+    .challenge-card { background-color: #fff; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); height: 100%; transition: transform 0.3s ease; display: flex; flex-direction: column; overflow: hidden; }
+    @media(min-width: 768px) { .challenge-card { flex-direction: row; } .poster-container { flex: 0 0 200px; } .card-content { flex: 1; } }
+    
+    .poster-container { position: relative; height: 200px; }
+    @media(min-width: 768px) { .poster-container { height: auto; } }
+    .challenge-poster { width: 100%; height: 100%; object-fit: cover; }
+    .card-content { padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-text h3 { margin: 0 0 0.5rem 0; font-size: 1.25rem; font-weight: 700; color: #111827; }
+    .card-text p { color: #4b5563; font-size: 0.95rem; line-height: 1.5; margin: 0; }
+    
+    /* Button Group Styles */
+    .statusbutton { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; flex-wrap: wrap; gap: 10px; }
+    .btn-group { display: flex; gap: 10px; }
+
+    .action-button { 
+        border: none; padding: 0.6rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 0.85rem;
+    }
+    .action-button.primary { background-color: #1d4ed8; color: #fff; }
+    .action-button.primary:hover { background-color: #1e40af; }
+    
+    .action-button.secondary { background-color: #fff; color: #1d4ed8; border: 1px solid #1d4ed8; }
+    .action-button.secondary:hover { background-color: #eff6ff; }
+
+    /* Tags */
+    .status-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .status-tag.upcoming { background-color: #fef3c7; color: #d97706; }
+    .status-tag.completed { background-color: #f3f4f6; color: #6b7280; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background-color: currentColor; }
+    
+    /* Responsive Tags */
+    .mobile-tag { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); backdrop-filter: blur(4px); }
+    .desktop-tag { display: none; }
+    @media(min-width: 768px) { .mobile-tag { display: none; } .desktop-tag { display: inline-flex; } }
+
+    /* --- MODAL CSS --- */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 1; transition: opacity 0.3s ease; }
+    .hidden { display: none !important; }
+    
+    .modal-content { background: white; width: 90%; max-width: 450px; padding: 2rem; border-radius: 16px; position: relative; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); animation: modalSlideIn 0.3s ease-out; max-height: 90vh; overflow-y: auto; }
+    
+    /* Wider modal for the table */
+    .wide-content { max-width: 800px; }
+
+    @keyframes modalSlideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: #9ca3af; transition: color 0.2s; }
+    .close-modal:hover { color: #111827; }
+
+    .modal-header { margin-bottom: 1.5rem; text-align: center; }
+    .modal-header h3 { margin: 0; font-size: 1.5rem; color: #111827; }
+    .modal-header p { margin: 0.5rem 0 0; color: #6b7280; font-size: 0.9rem; }
+
+    /* Form Styles */
+    .form-step { display: flex; flex-direction: column; gap: 1.25rem; }
+    .input-group, .form-step > div { width: 100%; }
+    label { display: block; font-weight: 600; font-size: 0.9rem; color: #374151; margin-bottom: 0.5rem; }
+    input, select { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; background-color: #fff; box-sizing: border-box; }
+    input:focus, select:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); }
+    small { display: block; margin-top: 0.25rem; color: #6b7280; font-size: 0.8rem; }
+    .modal-btn { width: 100%; background-color: #2563eb; color: white; padding: 0.8rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 0.5rem; }
+    .modal-btn:hover { background-color: #1d4ed8; }
+    .modal-btn:disabled { background-color: #93c5fd; cursor: not-allowed; }
+    .modal-btn.success { background-color: #059669; }
+
+    /* OTP Styles */
+    .otp-container { display: flex; gap: 0.75rem; justify-content: center; margin: 0.5rem 0; }
+    .otp-input { width: 3.5rem !important; height: 3.5rem; text-align: center; font-size: 1.5rem; font-weight: 700; padding: 0 !important; }
+
+    /* --- TABLE STYLES --- */
+    .table-container { overflow-x: auto; }
+    .teams-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+    .teams-table th { background-color: #f3f4f6; color: #374151; font-weight: 600; padding: 0.75rem 1rem; border-bottom: 2px solid #e5e7eb; }
+    .teams-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #e5e7eb; color: #4b5563; }
+    .teams-table tr:last-child td { border-bottom: none; }
+    .dept-badge { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 5px; font-weight: 600; }
+
+    .splide__arrow { background: #1e3a8a; opacity: 1; }
+    .splide__arrow svg { fill: white; }
+</style>
+
+<script>
+    import Splide from '@splidejs/splide';
+    import '@splidejs/splide/dist/css/splide.min.css';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Slider Init ---
+        const splide = new Splide('#challenges-slider', { 
+            type: 'loop', perPage: 2, perMove: 1, gap: '2rem', pagination: true, arrows: true, 
+            breakpoints: { 1024: { perPage: 2 }, 768: { perPage: 1 } } 
+        });
+        splide.mount();
+
+        // --- DOM Elements ---
+        const formModal = document.getElementById('team-modal');
+        const viewModal = document.getElementById('view-modal');
+        const formBtns = document.querySelectorAll('.form-team-trigger');
+        const viewBtns = document.querySelectorAll('.view-teams-trigger');
+        
+        // --- FORM TEAM LOGIC ---
+        // (Step elements)
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const step3 = document.getElementById('step-3');
+        const emailInput = document.getElementById('tl-email');
+        const otpInputs = document.querySelectorAll('.otp-input');
+        const selectMem2 = document.getElementById('member-2');
+        const selectMem3 = document.getElementById('member-3');
+        let tlEmail = "";
+        let availableStudents = [];
+
+        // Open Form Modal
+        formBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                formModal.classList.remove('hidden');
+                resetFormModal();
+            });
+        });
+
+        // Close Modals
+        document.querySelector('.close-form-modal').addEventListener('click', () => formModal.classList.add('hidden'));
+        document.querySelector('.close-view-modal').addEventListener('click', () => viewModal.classList.add('hidden'));
+
+        // --- VIEW TEAMS LOGIC ---
+        viewBtns.forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                viewModal.classList.remove('hidden');
+                await fetchAndRenderTeams();
+            });
+        });
+
+        async function fetchAndRenderTeams() {
+            const tableBody = document.getElementById('teams-table-body');
+            const loadingText = document.getElementById('loading-text');
+            const noTeamsText = document.getElementById('no-teams-text');
+            
+            tableBody.innerHTML = ''; // Clear table
+            loadingText.classList.remove('hidden');
+            noTeamsText.classList.add('hidden');
+
+            try {
+                const res = await fetch("http://localhost:3000/get-all-teams");
+                const teams = await res.json();
+                
+                loadingText.classList.add('hidden');
+
+                if (teams.length === 0) {
+                    noTeamsText.classList.remove('hidden');
+                    return;
+                }
+
+                teams.forEach(team => {
+                    const row = document.createElement('tr');
+                    
+                    // Helper to create cell with email and department badge
+                    const createCell = (member) => {
+                        if (!member) return '<td>N/A</td>';
+                        return `
+                            <td>
+                                ${member.email}
+                                <span class="dept-badge">${member.branch}</span>
+                            </td>
+                        `;
+                    };
+
+                    row.innerHTML = `
+                        <td style="font-weight:600; color:#111827;">${team.teamName}</td>
+                        ${createCell(team.leader)}
+                        ${createCell(team.member2)}
+                        ${createCell(team.member3)}
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+            } catch (err) {
+                loadingText.textContent = "Error loading data.";
+                console.error(err);
+            }
+        }
+
+        // --- SEND OTP ---
+        document.getElementById('send-otp-btn').addEventListener('click', async (e) => {
+            const btn = e.target;
+            if(emailInput.checkValidity() && emailInput.value.includes('@')) {
+                tlEmail = emailInput.value;
+                btn.textContent = "Sending...";
+                btn.disabled = true;
+
+                try {
+                    const res = await fetch("http://localhost:3000/send-otp", {
+                        method: "POST", headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email: tlEmail })
+                    });
+                    const data = await res.json();
+
+                    if(res.ok) {
+                        document.getElementById('display-email').textContent = tlEmail;
+                        step1.classList.add('hidden');
+                        step2.classList.remove('hidden');
+                        otpInputs[0].focus();
+                    } else { alert(data.message); }
+                } catch (err) { alert("Server Error"); } 
+                finally { btn.textContent = "Send OTP"; btn.disabled = false; }
+            } else { alert("Invalid Email"); }
+        });
+
+        // --- OTP INPUT ---
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if(e.target.value.length === 1 && index < otpInputs.length - 1) otpInputs[index + 1].focus();
+            });
+            input.addEventListener('keydown', (e) => {
+                if(e.key === 'Backspace' && index > 0 && e.target.value === '') otpInputs[index - 1].focus();
+            });
+        });
+
+        // --- VERIFY OTP ---
+        document.getElementById('verify-otp-btn').addEventListener('click', async (e) => {
+            let enteredOTP = "";
+            otpInputs.forEach(input => enteredOTP += input.value);
+            const btn = e.target;
+
+            if(enteredOTP.length !== 4) return alert("Enter 4 digits");
+
+            btn.textContent = "Verifying...";
+            try {
+                const res = await fetch("http://localhost:3000/verify-otp", {
+                    method: "POST", headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: tlEmail, otp: enteredOTP })
+                });
+
+                if(res.ok) {
+                    await fetchAvailableStudents();
+                    step2.classList.add('hidden');
+                    step3.classList.remove('hidden');
+                    populateDropdowns();
+                } else {
+                    alert("Invalid OTP");
+                    otpInputs.forEach(i => i.value = ""); otpInputs[0].focus();
+                }
+            } catch (err) { alert("Verification Failed"); } 
+            finally { btn.textContent = "Verify & Proceed"; }
+        });
+
+        // --- FETCH STUDENTS ---
+        async function fetchAvailableStudents() {
+            try {
+                const res = await fetch("http://localhost:3000/available-students");
+                if(res.ok) availableStudents = await res.json();
+            } catch (err) { console.error("Failed to fetch students"); }
+        }
+
+        // --- POPULATE DROPDOWNS ---
+        function populateDropdowns() {
+            const generateOptions = (selectElement, excludeEmail = null) => {
+                selectElement.innerHTML = '<option value="">Select a student...</option>';
+                availableStudents.forEach(stu => {
+                    if(stu.email !== tlEmail && stu.email !== excludeEmail) {
+                        const option = document.createElement('option');
+                        option.value = stu.email;
+                        option.textContent = `${stu.email} - ${stu.branch}`;
+                        selectElement.appendChild(option);
+                    }
+                });
+            };
+            generateOptions(selectMem2);
+            generateOptions(selectMem3);
+
+            selectMem2.addEventListener('change', () => {
+                const val2 = selectMem2.value;
+                const val3 = selectMem3.value;
+                generateOptions(selectMem3, val2);
+                selectMem3.value = val3 !== val2 ? val3 : "";
+            });
+            selectMem3.addEventListener('change', () => {
+                const val3 = selectMem3.value;
+                const val2 = selectMem2.value;
+                generateOptions(selectMem2, val3);
+                selectMem2.value = val2 !== val3 ? val2 : "";
+            });
+        }
+
+        // --- CREATE TEAM ---
+        document.getElementById('create-team-btn').addEventListener('click', async (e) => {
+            const teamName = document.getElementById('team-name').value;
+            const mem2 = selectMem2.value;
+            const mem3 = selectMem3.value;
+            const btn = e.target;
+
+            if(!teamName || !mem2 || !mem3) return alert("All fields required");
+
+            btn.textContent = "Creating...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch("http://localhost:3000/create-team", {
+                    method: "POST", headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ teamName, leaderEmail: tlEmail, member2Email: mem2, member3Email: mem3 })
+                });
+                const data = await res.json();
+
+                if(res.ok) {
+                    alert("🎉 Team Created Successfully!");
+                    formModal.classList.add('hidden');
+                } else { alert("Error: " + data.message); }
+            } catch (err) { alert("Failed to create team."); } 
+            finally { btn.textContent = "Create Team"; btn.disabled = false; }
+        });
+
+        function resetFormModal() {
+            step1.classList.remove('hidden');
+            step2.classList.add('hidden');
+            step3.classList.add('hidden');
+            emailInput.value = "";
+            otpInputs.forEach(i => i.value = "");
+            document.getElementById('team-name').value = "";
+            availableStudents = [];
+        }
+    });
+</script>

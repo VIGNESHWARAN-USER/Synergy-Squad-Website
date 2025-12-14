@@ -1,0 +1,34 @@
+{
+  "name": "synergysquad",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@splidejs/splide": "^4.1.4",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.14.1",
+    "axios": "^1.13.2",
+    "express": "^5.2.1",
+    "mongodb": "^7.0.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "description": "```sh\r npm create astro@latest -- --template minimal\r ```",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VIGNESHWARAN-USER/synergysquad.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VIGNESHWARAN-USER/synergysquad/issues"
+  },
+  "homepage": "https://github.com/VIGNESHWARAN-USER/synergysquad#readme"
+}

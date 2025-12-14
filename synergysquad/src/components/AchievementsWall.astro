@@ -1,0 +1,175 @@
+---
+// src/components/AchievementsWall.astro
+const achievements = [
+    { title: 'WEEK 8: MOCK PRATIAN', imageUrl: '/events-image/week-8.jpeg', toppers: ['Shabari K S (100)', 'Shriyaa S V (100)', 'Selva Ganapathi (100)'] },
+    { title: 'WEEK 7: MOCK WIPRO NLTH', imageUrl: '/events-image/week-7.jpeg', toppers: ['Anuvarshini T R (100)', 'Rasika S (100)', 'Vijay K R (100)', 'Gayathri R (100)', 'Kamalakannan N G (100)'] },
+    { title: 'WEEK 6: C MASTERCLASS', imageUrl: '/events-image/week-6.jpeg', toppers: ['Vijay K R (100)', 'Vibhav M (100)', 'Yuvasree M (100)'] },
+    { title: 'WEEK 5: C QUIZATHON', imageUrl: '/events-image/week-5.jpeg', toppers: ['Jeslin Maria Jacob (83)', 'Subasri C (66)', 'Kiruthika V M (66)'] },
+    { title: 'WEEK 4: MASTERING IN STRINGS', imageUrl: '/events-image/week-4.jpeg', toppers: ['Vibav Mahendran (94)', 'Shriyaa S V (80)', 'Saranya A (73)'] },
+    { title: 'WEEK 3: MASTERING IN ARRAY', imageUrl: '/events-image/week-3.jpeg', toppers: ['Jeevanandhan (100)', 'Shriyaa S V (100)', 'Vijay K R (100)'] },
+    { title: 'WEEK 2: MASTERING IN ARRAY', imageUrl: '/events-image/week-2.jpeg', toppers: ['Karthikeyan (88)', 'Meenachi S (88)', 'Keerthana D (80)'] },
+    { title: 'WEEK 1: PATTERN DAY', imageUrl: '/events-image/week-1.jpeg', toppers: ['Vijay K R (100)', 'Anuvarshini T (92)', 'Keerthana D (92)'] },
+];
+---
+
+<section class="achievements-wall">
+    <div class="container">
+        <div class="section-header fade-in-up">
+            <h2 class="section-title">Weekly Top Performers</h2>
+            <p class="section-subtitle">A showcase of the latest top performers from our weekly challenges.</p>
+        </div>
+
+        <div class="achievements-grid" id="achievements-grid">
+            {achievements.map((achievement, index) => (
+                <div class:list={['achievement-card', 'fade-in-up', { hidden: index >= 3 }]} data-index={index}>
+                    <div class="image-container">
+                        <img src={achievement.imageUrl} alt={achievement.title} loading="lazy" />
+                    </div>
+                    <div class="content-container">
+                        <h3>{achievement.title}</h3>
+                        <ul class="toppers-list">
+                            {achievement.toppers.map(topper => <li>{topper}</li>)}
+                        </ul>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <div class="cta-container">
+            <button id="load-more-btn" class="cta-button">View More Reports</button>
+            <button id="view-less-btn" class="cta-button hidden">View Less</button>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Base Styles */
+    .achievements-wall {
+        padding: 6rem 1.5rem;
+        background-color: #0f172a;
+        background-image: radial-gradient(circle at top right, rgba(12, 74, 110, 0.5), transparent 40%);
+        color: #e2e8f0;
+        border-top: 1px solid #1e293b;
+    }
+    .container { max-width: 1400px; margin: auto; }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-title { font-size: 2.75rem; font-weight: 900; margin-bottom: 1rem; color: #fff; text-shadow: 0 0 15px rgba(96, 165, 250, 0.3); }
+    .section-subtitle { max-width: 65ch; margin: auto; font-size: 1.125rem; color: #9ca3af; }
+
+    /* Grid Layout */
+    .achievements-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    @media (max-width: 1024px) { .achievements-grid { grid-template-columns: repeat(2, 1fr); } }
+    
+    /* Card Styles */
+    .achievement-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px; display: flex; flex-direction: column;
+        transition: all 0.3s ease;
+    }
+    .achievement-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(96, 165, 250, 0.5);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .image-container {
+        border-top-left-radius: 15px; border-top-right-radius: 15px;
+        overflow: hidden; aspect-ratio: 4 / 5;
+        background-color: rgba(0,0,0,0.2);
+        padding: 0.5rem;
+    }
+    .image-container img {
+        width: 100%; height: 100%;
+        object-fit: contain; 
+    }
+    .content-container { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .content-container h3 { font-size: 1.125rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem; color: #fff; }
+    .toppers-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .toppers-list li { font-size: 0.9rem; font-weight: 500; color: #cbd5e1; padding-left: 1.5rem; position: relative; }
+    .toppers-list li::before { content: '🏆'; position: absolute; left: 0; top: 0; font-size: 0.8rem; }
+    
+    /* CTA Button Styles */
+    .cta-container { text-align: center; margin-top: 4rem; }
+    .cta-button {
+        background-color: rgba(96, 165, 250, 0.1); color: #a5b4fc;
+        padding: 1rem 2rem; text-decoration: none; font-weight: 700;
+        border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.3);
+        transition: all 0.3s ease; cursor: pointer;
+    }
+    .cta-button:hover { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+    
+    /* Animation Helpers */
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+    .hidden { display: none !important; }
+
+    /* --- THIS IS THE UPDATE FOR MOBILE VIEW --- */
+    @media (max-width: 640px) {
+        .achievements-wall {
+            padding: 1.8rem 1.5rem; /* Reduced vertical padding */
+        }
+        .achievements-grid {
+            grid-template-columns: 1fr; /* Single column layout */
+            gap: 1.5rem; /* Tighter gap between cards */
+        }
+        .section-header {
+            margin-bottom: 3rem; /* Less space below header */
+        }
+        .section-title {
+            font-size: 2rem; /* Smaller title */
+        }
+        .section-subtitle {
+            font-size: 1rem; /* Smaller subtitle */
+        }
+    }
+</style>
+
+
+<script>
+    // The script logic is correct and does not need changes for mobile view.
+    document.addEventListener('DOMContentLoaded', () => {
+        const CARDS_TO_SHOW_INITIALLY = 3;
+        let cardsShown = CARDS_TO_SHOW_INITIALLY;
+        const grid = document.getElementById('achievements-grid');
+        const allCards = Array.from(grid.querySelectorAll('.achievement-card'));
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const viewLessBtn = document.getElementById('view-less-btn');
+
+        const updateButtonVisibility = () => {
+            if (cardsShown >= allCards.length) { loadMoreBtn.classList.add('hidden'); }
+            else { loadMoreBtn.classList.remove('hidden'); }
+            if (cardsShown > CARDS_TO_SHOW_INITIALLY) { viewLessBtn.classList.remove('hidden'); }
+            else { viewLessBtn.classList.add('hidden'); }
+        };
+        if (allCards.length <= CARDS_TO_SHOW_INITIALLY) { loadMoreBtn.classList.add('hidden'); }
+
+        loadMoreBtn.addEventListener('click', () => {
+            allCards.forEach(card => card.classList.remove('hidden'));
+            cardsShown = allCards.length;
+            updateButtonVisibility();
+        });
+        viewLessBtn.addEventListener('click', () => {
+            allCards.forEach((card, index) => {
+                if (index >= CARDS_TO_SHOW_INITIALLY) { card.classList.add('hidden'); }
+            });
+            cardsShown = CARDS_TO_SHOW_INITIALLY;
+            updateButtonVisibility();
+            grid.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        const elementsToAnimate = document.querySelectorAll('.fade-in-up');
+        elementsToAnimate.forEach(element => { if (!element.classList.contains('hidden')) { observer.observe(element); } });
+        loadMoreBtn.addEventListener('click', () => {
+            allCards.forEach(card => { if (!card.classList.contains('is-visible')) { observer.observe(card); } });
+        });
+    });
+</script>

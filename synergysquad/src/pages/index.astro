@@ -1,0 +1,39 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import UpcomingChallenges from '../components/UpcomingChallenges.astro';
+import Achievements from '../components/Achievements.astro';
+import AchievementsWall from '../components/AchievementsWall.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Leaderboard from '../components/Leaderboard.astro'; 
+---
+
+<Layout title="Synergy Squad - KIOT Coding Club">
+	<Hero />
+	
+	<main>
+		<UpcomingChallenges />
+		<Achievements />
+        <AchievementsWall />
+        <Testimonials />
+        <Leaderboard /> <!-- <-- We placed the new component here -->
+	</main>
+</Layout>
+
+<style>
+/* Add to your global.css or inside the home page/component style block */
+.section-title {
+  margin-bottom: 2.5rem !important;
+  margin-top: 2.5rem !important;
+}
+
+.highlight-stat,
+.logo-cloud,
+.upcoming-challenges {
+  margin-bottom: 2.5rem !important;
+  margin-top: 2.5rem !important;
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+</style>

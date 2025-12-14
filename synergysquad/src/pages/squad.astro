@@ -1,0 +1,362 @@
+---
+// src/pages/squad.astro
+import Layout from '../layouts/Layout.astro';
+
+// --- START: UPDATED DATA STRUCTURE ---
+// The members array now contains objects with detailed information.
+const allSquadsData = [
+    {
+        year: '2023-2024',
+        title: 'Synergy Squad 1.0 Members',
+        members: [
+    { name: 'Vibav Mahendran', year: 'III', section: '-', regNo: '611221104177' },
+    { name: 'selva ganapathi', year: 'III', section: '-', regNo: '611221104135' },
+    { name: 'shabari S', year: 'III', section: '-', regNo: '611221104137' },
+    { name: 'VIJAY K R', year: 'III', section: '-', regNo: '611221104180' },
+    { name: 'karthikeyan S', year: 'III', section: '-', regNo: '611221104064' },
+    { name: 'SATHISKUMAR P', year: 'III', section: '-', regNo: '611221104133' },
+    { name: 'THARANI k', year: 'III', section: '-', regNo: '611221104165' },
+    { name: 'nithish kumar', year: 'III', section: '-', regNo: '611221104099' },
+    { name: 'JEEVANANDHAN J', year: 'III', section: '-', regNo: '611221104054' },
+    { name: 'ANUVARSHINI R', year: 'III', section: '-', regNo: '611221104009' },
+    { name: 'NANDHINI K', year: 'III', section: '-', regNo: '611221104092' },
+    { name: 'yuvasree M', year: 'III', section: '-', regNo: '611221104188' },
+    { name: 'SHRIYAA S.V', year: 'III', section: '-', regNo: '611221104141' },
+    { name: 'KAMALAKANNAN NG', year: 'III', section: '-', regNo: '611221104060' },
+    { name: 'SATHYARAM R', year: 'III', section: '-', regNo: '611221104134' },
+    { name: 'Dhanush M', year: 'III', section: '-', regNo: '611221104017' },
+    { name: 'BA.SUSHMITHA BALAGANG', year: 'III', section: '-', regNo: '611221104160' },
+    { name: 'KARTHIK S', year: 'III', section: '-', regNo: '611221104062' },
+    { name: 'Keerthana D', year: 'III', section: '-', regNo: '611221104070' },
+    { name: 'Gayathri R', year: 'III', section: '-', regNo: '611221104079' },
+    { name: 'SUBASRI C', year: 'III', section: '-', regNo: '611221104152' },
+    { name: 'Sathish D', year: 'III', section: '-', regNo: '611221104132' },
+    { name: 's.meenachi s', year: 'III', section: '-', regNo: '611221104085' },
+    { name: 'NAVEETH J', year: 'III', section: '-', regNo: '611221104097' },
+    { name: 'Subikcha K.B', year: 'III', section: '-', regNo: '611221104154' },
+    { name: 'Sowantharya S', year: 'III', section: '-', regNo: '611221104143' },
+    { name: 'Suhasini P', year: 'III', section: '-', regNo: '611221104158' },
+    { name: 'Dharani M', year: 'III', section: '-', regNo: '611221104020' },
+    { name: 'swathi v', year: 'III', section: '-', regNo: '611221104161' },
+    { name: 'ARUNDHATHI S', year: 'III', section: '-', regNo: '611221104011' },
+    { name: 'JEEVIKA B', year: 'III', section: '-', regNo: '611221104055' },
+    { name: 'Jeslin jacob', year: 'III', section: '-', regNo: '611221104058' },
+    { name: 'DILIP S', year: 'III', section: '-', regNo: '611221104021' },
+    { name: 'YUVARAJ R', year: 'III', section: '-', regNo: '611221104187' },
+    { name: 'Harini S', year: 'III', section: '-', regNo: '611221104040' },
+    { name: 'ABISHEK M', year: 'III', section: '-', regNo: '611221104002' },
+    { name: 'BARATHRAJ K', year: 'III', section: '-', regNo: '611221104013' },
+    { name: 'Ragunaath S', year: 'III', section: '-', regNo: '611221104313' },
+    { name: 'AASHA S', year: 'III', section: '-', regNo: '611221104001' }
+     ].sort((a, b) => a.name.localeCompare(b.name)) 
+    },
+    {
+        year: '2024-2025',
+        title: 'Synergy Squad 2.0 Members',
+        members: [
+           { name: 'BHARATHI S', year: 'III', section: 'A', regNo: '611222104017' },
+    { name: 'ARUTSELVAN A', year: 'III', section: 'A', regNo: '611222104012' },
+    { name: 'INDHUPRAKASH P', year: 'III', section: 'A', regNo: '611222104052' },
+    { name: 'DEVASREE K P', year: 'III', section: 'A', regNo: '611222104024' },
+    { name: 'GAYATHRI M', year: 'III', section: 'A', regNo: '611222104038' },
+    { name: 'HARINI P', year: 'III', section: 'A', regNo: '611222104045' },
+    { name: 'ANITHA S S', year: 'III', section: 'A', regNo: '611222104008' },
+    { name: 'GANESHA MOORTHY S', year: 'III', section: 'A', regNo: '611222104037' },
+    { name: 'DHIVESH S', year: 'III', section: 'A', regNo: '611222104031' },
+    { name: 'BHUVANESH S', year: 'III', section: 'A', regNo: '611222104019' },
+    { name: 'DINESH V T', year: 'III', section: 'A', regNo: '611222104032' },
+    { name: 'INDHUVADHANI Y', year: 'III', section: 'A', regNo: '611222104053' },
+    { name: 'DHARSHINI S', year: 'III', section: 'A', regNo: '611222104028' },
+    { name: 'KANISHKA N', year: 'III', section: 'B', regNo: '611222104064' },
+    { name: 'PAVITHRA M', year: 'III', section: 'B', regNo: '611222104110' },
+    { name: 'KARTHIGA S', year: 'III', section: 'B', regNo: '611222104066' },
+    { name: 'KAVITHASHREE S', year: 'III', section: 'B', regNo: '611222104075' },
+    { name: 'MOSHIKAA S', year: 'III', section: 'B', regNo: '611222104095' },
+    { name: 'MADHUMITHA K', year: 'III', section: 'B', regNo: '611222104085' },
+    { name: 'NARMADHA V.S', year: 'III', section: 'B', regNo: '611222104104' },
+    { name: 'MOHANAVALLI M', year: 'III', section: 'B', regNo: '611222104091' },
+    { name: 'JEEVANNA M', year: 'III', section: 'B', regNo: '611222104059' },
+    { name: 'LAKSME THARANE V G', year: 'III', section: 'B', regNo: '611222104081' },
+    { name: 'MOSHIKAA S', year: 'III', section: 'B', regNo: '611222104095' },
+    { name: 'KARTHIKAA K', year: 'III', section: 'B', regNo: '611222104068' },
+    { name: 'KAVYA S', year: 'III', section: 'B', regNo: '611222104077' },
+    { name: 'NAMITHA M', year: 'III', section: 'B', regNo: '611222104101' },
+    { name: 'JEYASEELAN RA', year: 'III', section: 'B', regNo: '611222104061' },
+    { name: 'RAMESH M', year: 'III', section: 'C', regNo: '611222104124' },
+    { name: 'VIGNESHWARAN M', year: 'III', section: 'C', regNo: '611222104163' },
+    { name: 'SNEHA S J', year: 'III', section: 'C', regNo: '611222104143' },
+    { name: 'SATHYA SRI P V', year: 'III', section: 'C', regNo: '611222104137' },
+    { name: 'VIGNESHWARAN M', year: 'III', section: 'C', regNo: '611222104162' },
+    { name: 'UMA J', year: 'III', section: 'C', regNo: '611222104156' },
+    { name: 'PRAVEEN P', year: 'III', section: 'C', regNo: '611222104117' },
+    { name: 'SIVAKUMAR R', year: 'III', section: 'C', regNo: '611222104142' },
+    { name: 'SUBASREE G S', year: 'III', section: 'C', regNo: '611222104146' },
+    { name: 'SARAN P', year: 'III', section: 'C', regNo: '611222104135' },
+    { name: 'THARUN N', year: 'III', section: 'C', regNo: '611222104154' },
+    { name: 'SUBATHRA A', year: 'III', section: 'C', regNo: '611222104147' }
+        ].sort((a, b) => a.name.localeCompare(b.name))
+    },
+    {
+        year: '2025-2026',
+        title: 'Synergy Squad 3.0 Members',
+        members: [{
+            "name": "ARAVINTH KARTHIC K", "year": "III", "section": "A", "regNo": "611223104008"
+        }, {
+            "name": "ASHOKA S K", "year": "III", "section": "A", "regNo": "611223104012"
+        }, {
+            "name": "BADRI NARAYANAN B R", "year": "III", "section": "A", "regNo": "611223104015"
+        }, {
+            "name": "DAMODARA PRAKASH P", "year": "III", "section": "A", "regNo": "611223104023"
+        }, {
+            "name": "DEKSHA S", "year": "III", "section": "A", "regNo": "611223104026"
+        }, {
+            "name": "DHANUSHIYA S", "year": "III", "section": "A", "regNo": "611223104028"
+        }, {
+            "name": "DHINESHKUMAR M", "year": "III", "section": "A", "regNo": "611223104034"
+        }, {
+            "name": "DHIYANESH SUNDAR", "year": "III", "section": "A", "regNo": "611223104302"
+        }, {
+            "name": "DINESH G", "year": "III", "section": "A", "regNo": "611223104035"
+        }, {
+            "name": "GIRI N", "year": "III", "section": "A", "regNo": "611223104043"
+        }, {
+            "name": "JANANI C", "year": "III", "section": "B", "regNo": "611223104068"
+        }, {
+            "name": "MADHUSREE K", "year": "III", "section": "B", "regNo": "611223104087"
+        }, {
+            "name": "MAHALAKSHMI S", "year": "III", "section": "B", "regNo": "611223104089"
+        }, {
+            "name": "NAGA GAYATHRI P", "year": "III", "section": "B", "regNo": "611223104099"
+        }, {
+            "name": "NARENDHAR P", "year": "III", "section": "B", "regNo": "611223104102"
+        }, {
+            "name": "NATHAN SHIEH", "year": "III", "section": "B", "regNo": "611223104103"
+        }, {
+            "name": "NAVEEN PRASATH M", "year": "III", "section": "B", "regNo": "611223104107"
+        }, {
+            "name": "NISHANTH M", "year": "III", "section": "B", "regNo": "611223104112"
+        }, {
+            "name": "PRADEEPA S", "year": "III", "section": "B", "regNo": "611223104120"
+        }, {
+            "name": "PRANESH S", "year": "III", "section": "B", "regNo": "611223104122"
+        }, {
+            "name": "PRASANNAA V", "year": "III", "section": "B", "regNo": "611223104123"
+        }, {
+            "name": "ROHITH S", "year": "III", "section": "C", "regNo": "611223104133"
+        }, {
+            "name": "SANGEETHA A", "year": "III", "section": "C", "regNo": "611223104140"
+        }, {
+            "name": "SANJAY S", "year": "III", "section": "C", "regNo": "611223104141"
+        }, {
+            "name": "SANTHOSH J V", "year": "III", "section": "C", "regNo": "611223104144"
+        }, {
+            "name": "SANTHOSH R", "year": "III", "section": "C", "regNo": "611223104145"
+        }, {
+            "name": "SELVAGANESH U", "year": "III", "section": "C", "regNo": "611223104148"
+        }, {
+            "name": "SHREESARAN K", "year": "III", "section": "C", "regNo": "611223104151"
+        }, {
+            "name": "SOUNDARYA P", "year": "III", "section": "C", "regNo": "611223104152"
+        }, {
+            "name": "SRINITHI E", "year": "III", "section": "C", "regNo": "611223104155"
+        }, {
+            "name": "SUBHARANJINI M", "year": "III", "section": "C", "regNo": "611223104158"
+        }, {
+            "name": "SUBHASHREE V P", "year": "III", "section": "B", "regNo": "611223104159"
+        }, {
+            "name": "SUDHAKAR S", "year": "III", "section": "C", "regNo": "611223104160"
+        }, {
+            "name": "TEJAS T", "year": "III", "section": "C", "regNo": "611223104167"
+        }, {
+            "name": "THAMARAI SELVAN S", "year": "III", "section": "C", "regNo": "611223104168"
+        }, {
+            "name": "THARANKUMAR G", "year": "III", "section": "C", "regNo": "611223104169"
+        }, {
+            "name": "VARSHASHREE S", "year": "III", "section": "C", "regNo": "611223104172"
+        }, {
+            "name": "VEERASOWNDARYA V", "year": "III", "section": "C", "regNo": "611223104177"
+        }, {
+            "name": "VIGNESH S", "year": "III", "section": "C", "regNo": "611223104180"
+        }, {
+            "name": "VISHALINI S", "year": "III", "section": "C", "regNo": "611223104182"
+        }, {
+            "name": "VISHWAKUMAR J", "year": "III", "section": "C", "regNo": "611223104184"
+            
+        }].sort((a, b) => a.name.localeCompare(b.name))
+    }
+];
+---
+
+<Layout title="Squad Members - Synergy Squad">
+    <div class="archive-header">
+        <h1>Meet the Squad</h1>
+        <p>A complete directory of the talented and dedicated members of Synergy Squad for each academic year.</p>
+    </div>
+
+    <div class="year-tabs" id="year-tabs">
+        {allSquadsData.map((squadData, index) => (
+            <button class:list={['year-tab', { active: index === 0 }]} data-target={`squad-${squadData.year}`}>
+                {squadData.year}
+            </button>
+        ))}
+    </div>
+
+    <main class="archive-content">
+        {allSquadsData.map((squadData, index) => (
+            <div class:list={['year-content-wrapper', { 'is-active': index === 0 }]} id={`squad-${squadData.year}`}>
+                <div class="year-container">
+                    <div class="summary-block">
+                        <h2>{squadData.title}</h2>
+                    </div>
+                    {squadData.members.length > 0 ? (
+                        <div class="table-container">
+                            <div class="table-header">
+                                <div class="cell-name">Student Name</div>
+                                <div class="cell-year">Year</div>
+                                <div class="cell-section">Section</div>
+                                <div class="cell-reg">Register No</div>
+                            </div>
+                            {squadData.members.map(member => (
+                                <div class="table-row">
+                                    <div class="cell-name" data-label="Student Name">{member.name}</div>
+                                    <div class="cell-year" data-label="Year">{member.year}</div>
+                                    <div class="cell-section" data-label="Section">{member.section}</div>
+                                    <div class="cell-reg" data-label="Register No">{member.regNo}</div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p class="coming-soon">The squad for this academic year will be announced soon.</p>
+                    )}
+                </div>
+            </div>
+        ))}
+    </main>
+</Layout>
+
+<style>
+    /* Most styles are unchanged */
+    .archive-header { text-align: center; padding: 1rem 1.5rem 3rem; background-color: #fff; border-bottom: 1px solid var(--border-color); }
+    .archive-header h1 { font-size: 3rem; font-weight: 900; margin: 0 0 1rem; }
+    .archive-header p { font-size: 1.125rem; color: var(--text-secondary); max-width: 60ch; margin: auto; }
+    .year-tabs { display: flex; justify-content: center; gap: 0.5rem; padding: 1.5rem; background-color: var(--background-color); position: sticky; top: 73px; z-index: 5; border-bottom: 1px solid var(--border-color); }
+    .year-tab { padding: 0.75rem 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: #fff; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+    .year-tab:hover { background-color: var(--primary-color-hover); color: #fff; border-color: var(--primary-color-hover); }
+    .year-tab.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+    .year-content-wrapper { display: none; }
+    .year-content-wrapper.is-active { display: block; }
+    
+    .year-container { max-width: 1200px; margin: auto; padding: 3rem 1.5rem; }
+    .summary-block { text-align: center; margin-bottom: 3rem; }
+    .summary-block h2 { font-size: 2rem; font-weight: 800; }
+
+    .table-container {
+        background-color: #fff;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+    .table-header, .table-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        gap: 1.5rem;
+        padding: 1rem 1.5rem;
+        align-items: center;
+    }
+    .table-header {
+        background-color: #f3f6f9;
+        font-weight: 600;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .table-row {
+        border-top: 1px solid var(--border-color);
+    }
+    .table-row:nth-child(even) {
+        background-color: #fcfcfd;
+    }
+    .table-row:hover {
+        background-color: #eff4f9;
+    }
+    .cell-name { font-weight: 600; color: var(--text-primary); }
+    .cell-year, .cell-section { text-align: center; }
+    .cell-reg { font-family: monospace; color: var(--text-secondary); }
+    
+    .coming-soon { text-align: center; color: var(--text-secondary); font-size: 1.1rem; }
+
+    /* --- THIS IS THE UPDATE FOR MOBILE VIEW --- */
+    @media (max-width: 768px) {
+        .archive-header h1 {
+            font-size: 2.5rem;
+        }
+        .year-tabs {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .year-container {
+            padding: 2rem 1rem;
+        }
+        .table-header {
+            display: none; /* Hide the header on mobile */
+        }
+        .table-container {
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
+        .table-row {
+            display: block;
+            border: 1px solid var(--border-color);
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        /* Make each cell a block-level element */
+        .cell-name, .cell-year, .cell-section, .cell-reg {
+            display: flex;
+            justify-content: space-between;
+            text-align: right;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .cell-name {
+            font-size: 1.1rem;
+        }
+        .table-row div:last-child {
+            border-bottom: none;
+        }
+        /* Add labels using ::before pseudo-element */
+        [data-label]::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: left;
+            margin-right: 1rem;
+        }
+    }
+</style>
+
+<script>
+    // The tab-switching script is identical
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.year-tab');
+        const contentWrappers = document.querySelectorAll('.year-content-wrapper');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contentWrappers.forEach(c => c.classList.remove('is-active'));
+                tab.classList.add('active');
+                const targetId = tab.dataset.target;
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    targetContent.classList.add('is-active');
+                }
+            });
+        });
+    });
+</script>
