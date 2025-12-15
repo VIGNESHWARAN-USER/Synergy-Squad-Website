@@ -344,9 +344,9 @@ app.get("/api/get-all-teams", async (req, res) => {
   try {
     // Fetch teams and populate student details (only email and branch)
     const teams = await CCLTeam.find()
-      .populate("leader", "email branch")
-      .populate("member2", "email branch")
-      .populate("member3", "email branch");
+      .populate("leader", "fullName branch")
+      .populate("member2", "fullName branch")
+      .populate("member3", "fullName branch");
 
     res.status(200).json(teams);
   } catch (err) {
