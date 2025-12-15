@@ -7,35 +7,53 @@ const app = express();
 app.use(express.json());
 
 
+
+
+
 app.use(cors({
-  origin: [
-    "http://localhost:4321",
-    "https://synergy-squad-website-....vercel.app"
-  ],
+  origin: true,
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
 }));
+
+app.options("*", cors());
 
 const CCLDB = require("./models/CCLDB");
 const CCLTeam = require("./models/CCLTEAMS");
 
 
+if (!process.env.MONGO_URI) {
+  throw new Error("MONGO_URI is not defined");
+}
+
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  throw new Error("Email credentials missing");
+}
+
 
 let isConnected = false;
 
-export async function connectDB() {
+async function connectDB() {
   if (isConnected) return;
-  await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 5000,
+});
+
   isConnected = true;
 }
 
 
-app.get("/", (req, res) => {
+
+
+
+app.get("/api/", async (req, res) => {
+  await connectDB();
   res.send("Server is running");
 });
 
 
-app.get("/ccldb", async (req, res) => {
+app.get("/api/ccldb", async (req, res) => {
+  await connectDB();
   try {
     console.log(req.body);
     const student = await CCLDB.find();
@@ -45,18 +63,6 @@ app.get("/ccldb", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
-
-
-app.get("/cclteam", async (req, res) => {
-  try {
-    console.log(req.body);
-    const student = await CCLTeam.create();
-    res.status(201).json(student);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
 
 
 
@@ -73,7 +79,8 @@ const transporter = nodemailer.createTransport({
 // ... imports and config
 
 // 1. Send OTP Route
-app.post("/send-otp", async (req, res) => {
+app.post("/api/send-otp", async (req, res) => {
+  await connectDB();
   try {
     const { email } = req.body;
     
@@ -137,7 +144,8 @@ app.post("/send-otp", async (req, res) => {
 });
 
 // 2. Verify OTP Route (Add this to your backend)
-app.post("/verify-otp", async (req, res) => {
+app.post("/api/verify-otp", async (req, res) => {
+  await connectDB();
   try {
 
     const { email, otp } = req.body;
@@ -167,7 +175,8 @@ app.post("/verify-otp", async (req, res) => {
 
 // 1. GET AVAILABLE STUDENTS (For Dropdown)
 // Fetches students where status is NOT "True" (i.e., "False" or undefined)
-app.get("/available-students", async (req, res) => {
+app.get("/api/available-students", async (req, res) => {
+  await connectDB();
   try {
     const students = await CCLDB.find({ 
         status: { $ne: "True" } 
@@ -180,7 +189,8 @@ app.get("/available-students", async (req, res) => {
 });
 
 // 2. CREATE TEAM (With Constraint Checks)
-app.post("/create-team", async (req, res) => {
+app.post("/api/create-team", async (req, res) => {
+  await connectDB();
   try {
     const { teamName, leaderEmail, member2Email, member3Email } = req.body;
 
@@ -240,7 +250,8 @@ app.post("/create-team", async (req, res) => {
 // ... existing imports
 
 // 3. GET ALL TEAMS (For View Teams Modal)
-app.get("/get-all-teams", async (req, res) => {
+app.get("/api/get-all-teams", async (req, res) => {
+  await connectDB();
   try {
     // Fetch teams and populate student details (only email and branch)
     const teams = await CCLTeam.find()
@@ -256,4 +267,4 @@ app.get("/get-all-teams", async (req, res) => {
 });
 
 
-export default app;
+module.exports = app;
