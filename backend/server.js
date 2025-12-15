@@ -19,15 +19,16 @@ app.use(cors({
 const CCLDB = require("./models/CCLDB");
 const CCLTeam = require("./models/CCLTEAMS");
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB connected");
-  })
-  .catch((err) => {
-    console.error("MongoDB connection failed:", err.message);
-    process.exit(1);
-  });
+
+
+let isConnected = false;
+
+export async function connectDB() {
+  if (isConnected) return;
+  await mongoose.connect(process.env.MONGO_URI);
+  isConnected = true;
+}
+
 
 app.get("/", (req, res) => {
   res.send("Server is running");
@@ -257,6 +258,4 @@ app.get("/get-all-teams", async (req, res) => {
 });
 
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
-});
+export default app;
