@@ -297,7 +297,7 @@ const challenges = [
             noTeamsText.classList.add('hidden');
 
             try {
-                const res = await fetch("https://synergy-squad-website-j8yw.vercel.app/api/get-all-teams");
+                const res = await fetch("https://synergy-squad-website-j8yw-qb9wdhxzl-high-five.vercel.app/apiapi/get-all-teams");
                 const teams = await res.json();
                 
                 loadingText.classList.add('hidden');
@@ -345,7 +345,7 @@ const challenges = [
                 btn.disabled = true;
 
                 try {
-                    const res = await fetch("https://synergy-squad-website-j8yw.vercel.app/api/send-otp", {
+                    const res = await fetch("https://synergy-squad-website-j8yw-qb9wdhxzl-high-five.vercel.app/apiapi/send-otp", {
                         method: "POST", headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ email: tlEmail })
                     });
@@ -382,7 +382,7 @@ const challenges = [
 
             btn.textContent = "Verifying...";
             try {
-                const res = await fetch("https://synergy-squad-website-j8yw.vercel.app/api/verify-otp", {
+                const res = await fetch("https://synergy-squad-website-j8yw-qb9wdhxzl-high-five.vercel.app/apiapi/verify-otp", {
                     method: "POST", headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email: tlEmail, otp: enteredOTP })
                 });
@@ -403,7 +403,7 @@ const challenges = [
         // --- FETCH STUDENTS ---
         async function fetchAvailableStudents() {
             try {
-                const res = await fetch("https://synergy-squad-website-j8yw.vercel.app/api/available-students");
+                const res = await fetch("https://synergy-squad-website-j8yw-qb9wdhxzl-high-five.vercel.app/apiapi/available-students");
                 if(res.ok) availableStudents = await res.json();
             } catch (err) { console.error("Failed to fetch students"); }
         }
@@ -451,7 +451,7 @@ const challenges = [
             btn.disabled = true;
 
             try {
-                const res = await fetch("https://synergy-squad-website-j8yw.vercel.app/api/create-team", {
+                const res = await fetch("https://synergy-squad-website-j8yw-qb9wdhxzl-high-five.vercel.app/apiapi/create-team", {
                     method: "POST", headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ teamName, leaderEmail: tlEmail, member2Email: mem2, member3Email: mem3 })
                 });
