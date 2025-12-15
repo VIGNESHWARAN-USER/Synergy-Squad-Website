@@ -118,9 +118,8 @@ app.post("/api/send-otp", async (req, res) => {
           <div class="header"><h1>SYNERGY SQUAD</h1></div>
           <div class="content">
             <h2>Hello ${user.fullName},</h2>
-            <p>Use the One-Time Password (OTP) below to verify your email for the CCL Coding Challenge.</p>
+            <p>Use the One-Time Password (OTP) below to verify your email for the CCL Final Round Team Formation.</p>
             <div class="otp-box"><h1 class="otp-code">${otp}</h1></div>
-            <p>This code is valid for 10 minutes.</p>
           </div>
           <div class="footer"><p>&copy; Synergy Squad. All rights reserved.</p></div>
         </div>
