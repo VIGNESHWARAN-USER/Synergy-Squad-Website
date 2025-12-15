@@ -488,7 +488,7 @@ const challenges = [
             // 1. Fill Leader Info
             const tlStudent = availableStudents.find(s => s.email === tlEmail);
             if(tlStudent) {
-                tlNameDisplay.value = tlStudent.name;
+                tlNameDisplay.value = tlStudent.fullName;
                 tlEmailConfirm.textContent = tlEmail;
             } else {
                 tlNameDisplay.value = "Unknown / Not Found";
@@ -519,7 +519,7 @@ const challenges = [
                 
                 // Find and display name
                 const stu2 = availableStudents.find(s => s.email === val2);
-                mem2NameDisplay.value = stu2 ? stu2.name : "";
+                mem2NameDisplay.value = stu2 ? stu2.fullName : "";
 
                 // Update Mem 3 List to exclude Mem 2
                 generateOptions(selectMem3, val2);
@@ -528,7 +528,7 @@ const challenges = [
                 if(val3 && val3 !== val2) {
                     selectMem3.value = val3;
                     const stu3 = availableStudents.find(s => s.email === val3);
-                    mem3NameDisplay.value = stu3 ? stu3.name : "";
+                    mem3NameDisplay.value = stu3 ? stu3.fullName : "";
                 } else {
                     selectMem3.value = "";
                     mem3NameDisplay.value = "";
@@ -542,7 +542,7 @@ const challenges = [
 
                 // Find and display name
                 const stu3 = availableStudents.find(s => s.email === val3);
-                mem3NameDisplay.value = stu3 ? stu3.name : "";
+                mem3NameDisplay.value = stu3 ? stu3.fullName : "";
 
                 // Update Mem 2 List to exclude Mem 3
                 generateOptions(selectMem2, val3);
@@ -551,7 +551,7 @@ const challenges = [
                 if(val2 && val2 !== val3) {
                     selectMem2.value = val2;
                     const stu2 = availableStudents.find(s => s.email === val2);
-                    mem2NameDisplay.value = stu2 ? stu2.name : "";
+                    mem2NameDisplay.value = stu2 ? stu2.fullName : "";
                 } else {
                     selectMem2.value = "";
                     mem2NameDisplay.value = "";
