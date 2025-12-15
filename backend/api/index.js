@@ -99,34 +99,125 @@ app.post("/api/send-otp", async (req, res) => {
     console.log(`Generated OTP for ${email}: ${otp}`);
 
     const emailHtml = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <style>
-          body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-          .container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; }
-          .header { background-color: #1e3a8a; padding: 30px; text-align: center; }
-          .header h1 { color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 1px; font-weight: 700; }
-          .content { padding: 40px 30px; text-align: center; color: #333333; }
-          .otp-box { background-color: #f3f4f6; border: 1px dashed #1e3a8a; border-radius: 8px; padding: 20px; margin: 20px auto; width: fit-content; }
-          .otp-code { font-size: 32px; font-weight: 800; color: #1e3a8a; letter-spacing: 8px; margin: 0; }
-          .footer { background-color: #f9fafb; padding: 20px; text-align: center; font-size: 12px; color: #9ca3af; }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="header"><h1>SYNERGY SQUAD</h1></div>
-          <div class="content">
-            <h2>Hello ${user.fullName},</h2>
-            <p>Use the One-Time Password (OTP) below to verify your email for the CCL Final Round Team Formation.</p>
-            <div class="otp-box"><h1 class="otp-code">${otp}</h1></div>
-          </div>
-          <div class="footer"><p>&copy; Synergy Squad. All rights reserved.</p></div>
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <style>
+      body { 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        background-color: #f4f4f4; 
+        margin: 0; 
+        padding: 0; 
+      }
+      .container { 
+        max-width: 600px; 
+        margin: 40px auto; 
+        background-color: #ffffff; 
+        border-radius: 8px; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+        overflow: hidden; 
+      }
+      .header { 
+        background-color: #1e3a8a; 
+        padding: 35px 20px; 
+        text-align: center; 
+      }
+      .header h1 { 
+        color: #ffffff; 
+        margin: 0; 
+        font-size: 26px; 
+        letter-spacing: 2px; 
+        font-weight: 800; 
+        text-transform: uppercase;
+      }
+      .content { 
+        padding: 40px 40px; 
+        text-align: center; 
+        color: #374151; 
+      }
+      .greeting {
+        font-size: 20px;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 16px;
+      }
+      .message {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #4b5563;
+        margin-bottom: 30px;
+      }
+      .otp-box { 
+        background-color: #f9fafb; 
+        border: 2px dashed #1e3a8a; 
+        border-radius: 12px; 
+        padding: 20px 40px; 
+        margin: 30px auto; 
+        display: inline-block;
+      }
+      .otp-code { 
+        font-size: 36px; 
+        font-weight: 800; 
+        color: #1e3a8a; 
+        letter-spacing: 12px; 
+        margin: 0; 
+        font-family: monospace;
+      }
+      .sub-text {
+        font-size: 14px;
+        color: #6b7280;
+        margin-top: 20px;
+      }
+      .footer { 
+        background-color: #f9fafb; 
+        padding: 24px; 
+        text-align: center; 
+        border-top: 1px solid #e5e7eb;
+      }
+      .footer p {
+        font-size: 12px; 
+        color: #9ca3af;
+        margin: 5px 0;
+      }
+      .footer a {
+        color: #1e3a8a;
+        text-decoration: none;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h1>SYNERGY SQUAD</h1>
+      </div>
+      
+      <!-- Content -->
+      <div class="content">
+        <div class="greeting">Hello ${user.fullName || 'Future Leader'},</div>
+        
+        <p class="message">
+          We received a request to verify your email address for the <strong>CCL Coding Challenge</strong> team formation. Use the One-Time Password (OTP) below to proceed.
+        </p>
+        
+        <!-- OTP Box -->
+        <div class="otp-box">
+          <div class="otp-code">${otp}</div>
         </div>
-      </body>
-      </html>
-    `;
-
+        
+        <p class="sub-text">Please enter this code in the portal to verify your identity.</p>
+      </div>
+      
+      <!-- Footer -->
+      <div class="footer">
+        <p>&copy; 2025 Synergy Squad. All rights reserved.</p>
+        <p>Need help? Contact us at <a href="mailto:synergysquad@kiot.ac.in">support@synergysquad.com</a></p>
+      </div>
+    </div>
+  </body>
+  </html>
+`;
     await transporter.sendMail({
       from: `"Synergy Squad" <${process.env.EMAIL_USER}>`,
       to: email,
