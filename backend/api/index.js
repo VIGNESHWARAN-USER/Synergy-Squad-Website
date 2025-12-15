@@ -18,8 +18,8 @@ app.use(cors({
 
 app.options("*", cors());
 
-const CCLDB = require("./models/CCLDB");
-const CCLTeam = require("./models/CCLTEAMS");
+const CCLDB = require("../models/CCLDB");
+const CCLTeam = require("../models/CCLTEAMS");
 
 
 if (!process.env.MONGO_URI) {
@@ -38,7 +38,6 @@ async function connectDB() {
   await mongoose.connect(process.env.MONGO_URI, {
   serverSelectionTimeoutMS: 5000,
 });
-
   isConnected = true;
 }
 
