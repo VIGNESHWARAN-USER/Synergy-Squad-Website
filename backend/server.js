@@ -5,7 +5,7 @@ require("dotenv").config();
 const nodemailer = require('nodemailer');
 const app = express();
 app.use(express.json());
-import cors from "cors";
+
 
 app.use(cors({
   origin: [
@@ -59,7 +59,7 @@ app.get("/cclteam", async (req, res) => {
 
 
 
-app.use(express.json());
+
 
 // 1. Configure the Transporter
 const transporter = nodemailer.createTransport({
@@ -71,8 +71,6 @@ const transporter = nodemailer.createTransport({
 });
 
 // ... imports and config
-
-app.use(express.json());
 
 // 1. Send OTP Route
 app.post("/send-otp", async (req, res) => {
