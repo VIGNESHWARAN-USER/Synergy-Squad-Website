@@ -94,39 +94,43 @@ const challenges = [
                 <button id="verify-otp-btn" class="modal-btn">Verify & Proceed</button>
             </div>
 
-            <!-- STEP 3: Team Details -->
+            <!-- STEP 3: Team Details (REDESIGNED) -->
             <div id="step-3" class="form-step hidden">
-                <!-- Team Leader Info (Auto-filled) -->
-                <div class="input-group">
-                    <label>Team Leader</label>
-                    <input type="text" id="tl-name-display" readonly disabled class="read-only-input" />
-                    <small style="color: #2563eb; font-weight: 500;" id="tl-email-confirm"></small>
-                </div>
-
-                <div class="input-group">
+                
+                <!-- Field 1: Team Name -->
+                <div class="input-group full-width">
                     <label for="team-name">Team Name</label>
                     <input type="text" id="team-name" placeholder="e.g., The Algorists" required />
-                    <small>Only letters and numbers allowed.</small>
+                    <small class="helper-text">Team name should be professional.</small>
                 </div>
 
-                <!-- Member 2 -->
-                <div class="input-group">
-                    <label for="member-2">Team Member 2</label>
-                    <select id="member-2" class="member-select">
-                        <option value="">Select a student...</option>
-                    </select>
-                    <!-- Name Display Field -->
-                    <input type="text" id="member-2-name" placeholder="Member Name" readonly disabled class="read-only-input mt-2" />
-                </div>
+                <!-- Team Composition Grid -->
+                <div class="team-grid">
+                    
+                    <!-- Field 2: Leader (Read Only) -->
+                    <div class="member-card leader-card">
+                        <div class="card-label">Team Leader (You)</div>
+                        <input type="text" id="tl-name-display" readonly disabled class="read-only-input bold-input" />
+                        <div class="email-subtext" id="tl-email-confirm"></div>
+                    </div>
 
-                <!-- Member 3 -->
-                <div class="input-group">
-                    <label for="member-3">Team Member 3</label>
-                    <select id="member-3" class="member-select">
-                        <option value="">Select a student...</option>
-                    </select>
-                    <!-- Name Display Field -->
-                    <input type="text" id="member-3-name" placeholder="Member Name" readonly disabled class="read-only-input mt-2" />
+                    <!-- Field 3 & 4: Member 2 -->
+                    <div class="member-card">
+                        <div class="card-label">Team Member 2</div>
+                        <select id="member-2" class="member-select">
+                            <option value="">Select email...</option>
+                        </select>
+                        <input type="text" id="member-2-name" placeholder="Name appears here" readonly disabled class="read-only-input mt-1" />
+                    </div>
+
+                    <!-- Field 5 & 6: Member 3 -->
+                    <div class="member-card">
+                        <div class="card-label">Team Member 3</div>
+                        <select id="member-3" class="member-select">
+                            <option value="">Select email...</option>
+                        </select>
+                        <input type="text" id="member-3-name" placeholder="Name appears here" readonly disabled class="read-only-input mt-1" />
+                    </div>
                 </div>
 
                 <button id="create-team-btn" class="modal-btn success">Create Team</button>
@@ -134,7 +138,7 @@ const challenges = [
         </div>
     </div>
 
-    <!-- MODAL 2: VIEW TEAMS (NEW) -->
+    <!-- MODAL 2: VIEW TEAMS -->
     <div id="view-modal" class="modal-overlay hidden">
         <div class="modal-content wide-content">
             <button class="close-modal close-view-modal">&times;</button>
@@ -206,7 +210,7 @@ const challenges = [
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 1; transition: opacity 0.3s ease; }
     .hidden { display: none !important; }
     
-    .modal-content { background: white; width: 90%; max-width: 450px; padding: 2rem; border-radius: 16px; position: relative; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); animation: modalSlideIn 0.3s ease-out; max-height: 90vh; overflow-y: auto; }
+    .modal-content { background: white; width: 90%; max-width: 500px; /* Slightly wider */ padding: 2rem; border-radius: 16px; position: relative; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); animation: modalSlideIn 0.3s ease-out; max-height: 90vh; overflow-y: auto; }
     .wide-content { max-width: 800px; }
 
     @keyframes modalSlideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -218,24 +222,79 @@ const challenges = [
     .modal-header h3 { margin: 0; font-size: 1.5rem; color: #111827; }
     .modal-header p { margin: 0.5rem 0 0; color: #6b7280; font-size: 0.9rem; }
 
-    .form-step { display: flex; flex-direction: column; gap: 1.25rem; }
+    .form-step { display: flex; flex-direction: column; gap: 1rem; }
     .input-group, .form-step > div { width: 100%; }
     label { display: block; font-weight: 600; font-size: 0.9rem; color: #374151; margin-bottom: 0.5rem; }
     input, select { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; background-color: #fff; box-sizing: border-box; }
     input:focus, select:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); }
-    small { display: block; margin-top: 0.25rem; color: #6b7280; font-size: 0.8rem; }
+    
+    .helper-text { display: block; margin-top: 0.25rem; color: #6b7280; font-size: 0.8rem; font-style: italic; }
+
     .modal-btn { width: 100%; background-color: #2563eb; color: white; padding: 0.8rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 0.5rem; }
     .modal-btn:hover { background-color: #1d4ed8; }
     .modal-btn:disabled { background-color: #93c5fd; cursor: not-allowed; }
     .modal-btn.success { background-color: #059669; }
 
-    /* New Styles for Read Only Fields */
-    .read-only-input { background-color: #f3f4f6 !important; color: #1f2937; border-color: #e5e7eb; cursor: not-allowed; font-weight: 600; }
-    .mt-2 { margin-top: 0.5rem; }
+    /* --- REDESIGNED FORM STEP 3 --- */
+    .team-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
 
+    .member-card {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        padding: 0.8rem;
+        border-radius: 8px;
+        position: relative;
+    }
+    
+    .leader-card {
+        background: #eff6ff; /* Light blue tint for leader */
+        border-color: #bfdbfe;
+    }
+
+    .card-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+    }
+
+    .leader-card .card-label { color: #1d4ed8; }
+
+    .read-only-input { 
+        background-color: transparent !important; 
+        color: #111827; 
+        border: none !important; 
+        padding: 0 !important; 
+        font-weight: 600; 
+        font-size: 1rem;
+        cursor: default;
+    }
+    
+    .member-card select {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .member-card .mt-1 { margin-top: 0.25rem; font-size: 0.95rem; color: #111827; }
+
+    .email-subtext {
+        font-size: 0.8rem;
+        color: #6b7280;
+        margin-top: 2px;
+    }
+
+    /* OTP Styles */
     .otp-container { display: flex; gap: 0.75rem; justify-content: center; margin: 0.5rem 0; }
-    .otp-input { width: 3.5rem !important; height: 3.5rem; text-align: center; font-size: 1.5rem; font-weight: 700; padding: 0 !important; }
+    .otp-input { width: 3.5rem !important; height: 3.5rem; text-align: center; font-size: 1.5rem; font-weight: 700; padding: 0 !important; border: 1px solid #d1d5db !important; }
 
+    /* Table */
     .table-container { overflow-x: auto; }
     .teams-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
     .teams-table th { background-color: #f3f4f6; color: #374151; font-weight: 600; padding: 0.75rem 1rem; border-bottom: 2px solid #e5e7eb; }
@@ -272,11 +331,9 @@ const challenges = [
         const emailInput = document.getElementById('tl-email');
         const otpInputs = document.querySelectorAll('.otp-input');
         
-        // Select Inputs
+        // Step 3 Elements
         const selectMem2 = document.getElementById('member-2');
         const selectMem3 = document.getElementById('member-3');
-        
-        // Name Display Inputs (Step 3)
         const tlNameDisplay = document.getElementById('tl-name-display');
         const tlEmailConfirm = document.getElementById('tl-email-confirm');
         const mem2NameDisplay = document.getElementById('member-2-name');
@@ -426,73 +483,73 @@ const challenges = [
             } catch (err) { console.error("Failed to fetch students"); }
         }
 
-        // --- POPULATE DROPDOWNS & HANDLE NAMES ---
+        // --- POPULATE DROPDOWNS & AUTOFILL ---
         function populateDropdowns() {
-            // 1. Identify and Display Team Leader Name
+            // 1. Fill Leader Info
             const tlStudent = availableStudents.find(s => s.email === tlEmail);
             if(tlStudent) {
-                tlNameDisplay.value = tlStudent.name; // Display TL Name
+                tlNameDisplay.value = tlStudent.name;
                 tlEmailConfirm.textContent = tlEmail;
             } else {
                 tlNameDisplay.value = "Unknown / Not Found";
                 tlEmailConfirm.textContent = tlEmail;
             }
 
-            // 2. Helper to populate select options
+            // 2. Options Helper
             const generateOptions = (selectElement, excludeEmail = null) => {
-                selectElement.innerHTML = '<option value="">Select a student...</option>';
+                selectElement.innerHTML = '<option value="">Select email...</option>';
                 availableStudents.forEach(stu => {
                     if(stu.email !== tlEmail && stu.email !== excludeEmail) {
                         const option = document.createElement('option');
                         option.value = stu.email;
-                        option.textContent = `${stu.email} - ${stu.branch}`;
+                        option.textContent = `${stu.email} (${stu.branch})`;
                         selectElement.appendChild(option);
                     }
                 });
             };
 
-            // Initial populate
+            // Initial Generation
             generateOptions(selectMem2);
             generateOptions(selectMem3);
 
-            // 3. Event Listener: Member 2 Change
+            // 3. Listener Member 2
             selectMem2.addEventListener('change', () => {
                 const val2 = selectMem2.value;
                 const val3 = selectMem3.value;
                 
-                // Update Member 2 Name Field
+                // Find and display name
                 const stu2 = availableStudents.find(s => s.email === val2);
-                mem2NameDisplay.value = stu2 ? stu2.fullName : "";
+                mem2NameDisplay.value = stu2 ? stu2.name : "";
 
-                // Update Member 3 Dropdown options to exclude Member 2
+                // Update Mem 3 List to exclude Mem 2
                 generateOptions(selectMem3, val2);
-                // Restore selection if valid
-                if(val3 !== val2) {
-                     selectMem3.value = val3;
-                     // Ensure Member 3 name stays if value persists
-                     const stu3 = availableStudents.find(s => s.email === val3);
-                     mem3NameDisplay.value = stu3 ? stu3.fullName : "";
+                
+                // Restore selection if not conflicting
+                if(val3 && val3 !== val2) {
+                    selectMem3.value = val3;
+                    const stu3 = availableStudents.find(s => s.email === val3);
+                    mem3NameDisplay.value = stu3 ? stu3.name : "";
                 } else {
                     selectMem3.value = "";
                     mem3NameDisplay.value = "";
                 }
             });
 
-            // 4. Event Listener: Member 3 Change
+            // 4. Listener Member 3
             selectMem3.addEventListener('change', () => {
                 const val3 = selectMem3.value;
                 const val2 = selectMem2.value;
-                
-                // Update Member 3 Name Field
+
+                // Find and display name
                 const stu3 = availableStudents.find(s => s.email === val3);
                 mem3NameDisplay.value = stu3 ? stu3.name : "";
 
-                // Update Member 2 Dropdown options to exclude Member 3
+                // Update Mem 2 List to exclude Mem 3
                 generateOptions(selectMem2, val3);
-                // Restore selection if valid
-                if(val2 !== val3) {
+
+                // Restore selection
+                if(val2 && val2 !== val3) {
                     selectMem2.value = val2;
-                    // Ensure Member 2 name stays
                     const stu2 = availableStudents.find(s => s.email === val2);
                     mem2NameDisplay.value = stu2 ? stu2.name : "";
                 } else {
@@ -537,11 +594,10 @@ const challenges = [
             otpInputs.forEach(i => i.value = "");
             document.getElementById('team-name').value = "";
             
-            // Clear new name fields
             tlNameDisplay.value = "";
+            tlEmailConfirm.textContent = "";
             mem2NameDisplay.value = "";
             mem3NameDisplay.value = "";
-            tlEmailConfirm.textContent = "";
 
             availableStudents = [];
         }
